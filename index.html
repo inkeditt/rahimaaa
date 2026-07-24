@@ -68,53 +68,57 @@
         }
 
         /* --- CONFIGURATION DES PAGES --- */
-        #page-intro { 
+        #rahimanniv { 
             background-color: #FFF5F6; 
             color: #4A2638; 
         }
 
-        #page-intro .section-title {
+        #rahimanniv .section-title {
             color: #9A536A;
         }
 
-        #page-exploits { 
+        #rahimaths { 
             background-color: #F4F8F3; 
             color: #263D35; 
         }
 
-        #page-exploits .section-title {
+        #rahimaths .section-title {
             color: #527A64;
         }
 
-        #page-cloud { 
+        #rahimessages { 
             background-color: #FBF4E8; 
             color: #4B4038; 
         }
 
-        #page-cloud .section-title {
+        #rahimessages .section-title {
             color: #806653;
         }
 
-        #page-secret { 
+        #rahimood { 
             background-color: #F7F2F9; 
             color: #38263F; 
         }
 
-        #page-secret .section-title {
+        #rahimood .section-title {
             color: #705477;
         }
 
-        /* --- BARRE D'ICÔNES DE NAVIGATION AVEC BULLE GLISSANTE --- */
+        /* --- BARRE D'ICÔNES DE NAVIGATION COMMUNE & FIXE --- */
         .bottom-nav-bar {
-            position: absolute;
+            position: fixed;
             bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             gap: 18px;
-            z-index: 50;
+            z-index: 1000;
             padding: 4px 12px;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 50px;
         }
 
         .nav-indicator {
@@ -141,6 +145,7 @@
             background-color: transparent;
             position: relative;
             z-index: 2;
+            cursor: pointer;
         }
 
         .nav-icon-bubble:hover {
@@ -156,10 +161,10 @@
             fill: none;
         }
 
-        /* Mode horizontal/ordinateur : Barre de navigation verticale à droite */
+        /* Mode horizontal/ordinateur : Barre de navigation verticale fixe à droite */
         @media (min-aspect-ratio: 1/1) {
             .bottom-nav-bar {
-                position: absolute;
+                position: fixed;
                 top: 50%;
                 right: 15px;
                 bottom: auto;
@@ -168,35 +173,36 @@
                 flex-direction: column;
                 gap: 18px;
                 padding: 12px 4px;
+                border-radius: 50px;
             }
             .nav-indicator {
                 top: 12px;
                 left: 4px;
             }
-            .bottom-nav-bar[data-active="intro"] .nav-indicator { transform: translateY(0px); }
-            .bottom-nav-bar[data-active="exploits"] .nav-indicator { transform: translateY(52px); }
-            .bottom-nav-bar[data-active="cloud"] .nav-indicator { transform: translateY(104px); }
-            .bottom-nav-bar[data-active="secret"] .nav-indicator { transform: translateY(156px); }
+            .bottom-nav-bar[data-active="rahimanniv"] .nav-indicator { transform: translateY(0px); }
+            .bottom-nav-bar[data-active="rahimaths"] .nav-indicator { transform: translateY(52px); }
+            .bottom-nav-bar[data-active="rahimessages"] .nav-indicator { transform: translateY(104px); }
+            .bottom-nav-bar[data-active="rahimood"] .nav-indicator { transform: translateY(156px); }
         }
 
         @media not all and (min-aspect-ratio: 1/1) {
-            .bottom-nav-bar[data-active="intro"] .nav-indicator { transform: translateX(0px); }
-            .bottom-nav-bar[data-active="exploits"] .nav-indicator { transform: translateX(52px); }
-            .bottom-nav-bar[data-active="cloud"] .nav-indicator { transform: translateX(104px); }
-            .bottom-nav-bar[data-active="secret"] .nav-indicator { transform: translateX(156px); }
+            .bottom-nav-bar[data-active="rahimanniv"] .nav-indicator { transform: translateX(0px); }
+            .bottom-nav-bar[data-active="rahimaths"] .nav-indicator { transform: translateX(52px); }
+            .bottom-nav-bar[data-active="rahimessages"] .nav-indicator { transform: translateX(104px); }
+            .bottom-nav-bar[data-active="rahimood"] .nav-indicator { transform: translateX(156px); }
         }
 
-        .bottom-nav-bar[data-active="intro"] .nav-indicator { background-color: rgba(217, 143, 163, 0.4); }
-        #page-intro .nav-icon-bubble svg { stroke: #4A2638; }
+        .bottom-nav-bar[data-active="rahimanniv"] .nav-indicator { background-color: rgba(217, 143, 163, 0.4); }
+        .bottom-nav-bar[data-active="rahimanniv"] .nav-icon-bubble svg { stroke: #4A2638; }
 
-        .bottom-nav-bar[data-active="exploits"] .nav-indicator { background-color: rgba(142, 186, 154, 0.4); }
-        #page-exploits .nav-icon-bubble svg { stroke: #172922; }
+        .bottom-nav-bar[data-active="rahimaths"] .nav-indicator { background-color: rgba(142, 186, 154, 0.4); }
+        .bottom-nav-bar[data-active="rahimaths"] .nav-icon-bubble svg { stroke: #172922; }
 
-        .bottom-nav-bar[data-active="cloud"] .nav-indicator { background-color: rgba(197, 160, 135, 0.4); }
-        #page-cloud .nav-icon-bubble svg { stroke: #4B4038; }
+        .bottom-nav-bar[data-active="rahimessages"] .nav-indicator { background-color: rgba(197, 160, 135, 0.4); }
+        .bottom-nav-bar[data-active="rahimessages"] .nav-icon-bubble svg { stroke: #4B4038; }
 
-        .bottom-nav-bar[data-active="secret"] .nav-indicator { background-color: rgba(197, 168, 204, 0.4); }
-        #page-secret .nav-icon-bubble svg { stroke: #38263F; }
+        .bottom-nav-bar[data-active="rahimood"] .nav-indicator { background-color: rgba(197, 168, 204, 0.4); }
+        .bottom-nav-bar[data-active="rahimood"] .nav-icon-bubble svg { stroke: #38263F; }
 
         /* --- COMMUN BENTO --- */
         .bento-container {
@@ -240,41 +246,41 @@
         .card-rose-dark   { background-color: #A95770; color: #FFF8F5; box-shadow: 0 8px 20px rgba(74, 38, 56, 0.08); } 
         .card-rose-deep   { background-color: #C98F9F; color: #3D2230; box-shadow: 0 8px 20px rgba(74, 38, 56, 0.08); } 
 
-        #page-intro .bento-row:nth-child(1) .bento-card:nth-child(1) { flex: 0.8; padding: 14px; }
-        #page-intro .bento-row:nth-child(1) .bento-card:nth-child(2) { flex: 1.6; padding: 10px; }
-        #page-intro .bento-row:nth-child(2) .bento-card:nth-child(1) { flex: 1.3; padding: 12px; }
-        #page-intro .bento-row:nth-child(2) .bento-card:nth-child(2) { flex: 0.9; padding: 12px; }
-        #page-intro .bento-row:nth-child(3) .bento-card:nth-child(1) { flex: 1; padding: 12px; }
-        #page-intro .bento-row:nth-child(3) .bento-card:nth-child(2) { flex: 1.2; padding: 12px; }
-        #page-intro .bento-row:nth-child(4) .bento-card:nth-child(1) { flex: 1.5; padding: 12px; }
-        #page-intro .bento-row:nth-child(4) .bento-card:nth-child(2) { flex: 0.8; padding: 12px; }
+        #rahimanniv .bento-row:nth-child(1) .bento-card:nth-child(1) { flex: 0.8; padding: 14px; }
+        #rahimanniv .bento-row:nth-child(1) .bento-card:nth-child(2) { flex: 1.6; padding: 10px; }
+        #rahimanniv .bento-row:nth-child(2) .bento-card:nth-child(1) { flex: 1.3; padding: 12px; }
+        #rahimanniv .bento-row:nth-child(2) .bento-card:nth-child(2) { flex: 0.9; padding: 12px; }
+        #rahimanniv .bento-row:nth-child(3) .bento-card:nth-child(1) { flex: 1; padding: 12px; }
+        #rahimanniv .bento-row:nth-child(3) .bento-card:nth-child(2) { flex: 1.2; padding: 12px; }
+        #rahimanniv .bento-row:nth-child(4) .bento-card:nth-child(1) { flex: 1.5; padding: 12px; }
+        #rahimanniv .bento-row:nth-child(4) .bento-card:nth-child(2) { flex: 0.8; padding: 12px; }
 
         .card-purple-1 { background-color: #E6D8EB; color: #49344F; box-shadow: 0 8px 20px rgba(56, 38, 63, 0.06); } 
         .card-purple-2 { background-color: #C5A8CC; color: #3B2842; box-shadow: 0 8px 20px rgba(56, 38, 63, 0.06); } 
         .card-purple-3 { background-color: #80618A; color: #FAF7FB; box-shadow: 0 8px 20px rgba(56, 38, 63, 0.08); } 
         .card-purple-4 { background-color: #A77BB0; color: #38263F; box-shadow: 0 8px 20px rgba(56, 38, 63, 0.08); } 
 
-        #page-secret .bento-row:nth-child(1) .bento-card:nth-child(1) { flex: 1.2; padding: 14px; }
-        #page-secret .bento-row:nth-child(1) .bento-card:nth-child(2) { flex: 1; padding: 10px; }
-        #page-secret .bento-row:nth-child(2) .bento-card:nth-child(1) { flex: 0.9; padding: 12px; }
-        #page-secret .bento-row:nth-child(2) .bento-card:nth-child(2) { flex: 1.4; padding: 12px; }
-        #page-secret .bento-row:nth-child(3) .bento-card:nth-child(1) { flex: 1.1; padding: 12px; }
-        #page-secret .bento-row:nth-child(3) .bento-card:nth-child(2) { flex: 1; padding: 12px; }
-        #page-secret .bento-row:nth-child(4) .bento-card:nth-child(1) { flex: 0.8; padding: 12px; }
-        #page-secret .bento-row:nth-child(4) .bento-card:nth-child(2) { flex: 1.5; padding: 12px; }
+        #rahimood .bento-row:nth-child(1) .bento-card:nth-child(1) { flex: 1.2; padding: 14px; }
+        #rahimood .bento-row:nth-child(1) .bento-card:nth-child(2) { flex: 1; padding: 10px; }
+        #rahimood .bento-row:nth-child(2) .bento-card:nth-child(1) { flex: 0.9; padding: 12px; }
+        #rahimood .bento-row:nth-child(2) .bento-card:nth-child(2) { flex: 1.4; padding: 12px; }
+        #rahimood .bento-row:nth-child(3) .bento-card:nth-child(1) { flex: 1.1; padding: 12px; }
+        #rahimood .bento-row:nth-child(3) .bento-card:nth-child(2) { flex: 1; padding: 12px; }
+        #rahimood .bento-row:nth-child(4) .bento-card:nth-child(1) { flex: 0.8; padding: 12px; }
+        #rahimood .bento-row:nth-child(4) .bento-card:nth-child(2) { flex: 1.5; padding: 12px; }
 
         .card-green-light  { background-color: #BCD3C2; color: #172922; box-shadow: 0 8px 20px rgba(38, 61, 53, 0.08); } 
         .card-green-medium { background-color: #8EBA9A; color: #172922; box-shadow: 0 8px 20px rgba(38, 61, 53, 0.08); } 
         .card-green-dark   { background-color: #4C7561; color: #F7F4E9; box-shadow: 0 8px 20px rgba(38, 61, 53, 0.08); } 
         .card-green-deep   { background-color: #668B78; color: #F7F4E9; box-shadow: 0 8px 20px rgba(38, 61, 53, 0.08); } 
 
-        #page-exploits .bento-row:nth-child(1) .bento-card:nth-child(1) { flex: 0.8; padding: 16px; }
-        #page-exploits .bento-row:nth-child(1) .bento-card:nth-child(2) { flex: 1.6; padding: 12px; }
-        #page-exploits .bento-row:nth-child(2) .bento-card:nth-child(1) { flex: 1; padding: 14px; }
-        #page-exploits .bento-row:nth-child(3) .bento-card:nth-child(1) { flex: 1.5; padding: 12px; }
-        #page-exploits .bento-row:nth-child(3) .bento-card:nth-child(2) { flex: 0.9; padding: 16px; }
-        #page-exploits .bento-row:nth-child(4) .bento-card:nth-child(1) { flex: 1; padding: 12px; }
-        #page-exploits .bento-row:nth-child(4) .bento-card:nth-child(2) { flex: 1.2; padding: 12px; }
+        #rahimaths .bento-row:nth-child(1) .bento-card:nth-child(1) { flex: 0.8; padding: 16px; }
+        #rahimaths .bento-row:nth-child(1) .bento-card:nth-child(2) { flex: 1.6; padding: 12px; }
+        #rahimaths .bento-row:nth-child(2) .bento-card:nth-child(1) { flex: 1; padding: 14px; }
+        #rahimaths .bento-row:nth-child(3) .bento-card:nth-child(1) { flex: 1.5; padding: 12px; }
+        #rahimaths .bento-row:nth-child(3) .bento-card:nth-child(2) { flex: 0.9; padding: 16px; }
+        #rahimaths .bento-row:nth-child(4) .bento-card:nth-child(1) { flex: 1; padding: 12px; }
+        #rahimaths .bento-row:nth-child(4) .bento-card:nth-child(2) { flex: 1.2; padding: 12px; }
 
         .stat-label-bottom { font-size: 0.74em; font-weight: 600; margin-top: 4px; line-height: 1.25; }
 
@@ -318,7 +324,7 @@
         .dropdown-item input[type="checkbox"] { cursor: pointer; accent-color: #B86F5D; width: 15px; height: 15px; }
         .dropdown-item:hover { background: rgba(184, 111, 93, 0.1); color: #8C4736; }
 
-        /* --- PAGE 3 : CONSTELLATION --- */
+        /* --- CONSTELLATION --- */
         .constellation-container {
             position: relative; width: 100%; max-width: 950px; height: 100%; max-height: 460px;
             margin: 0 auto; z-index: 5; padding: 10px; overflow: visible; flex-grow: 1;
@@ -337,18 +343,9 @@
         .dot-card.is-hidden { opacity: 0 !important; pointer-events: none !important; }
 
         .dot-card svg.image-icon {
-            width: 50%;
-            height: 50%;
-            stroke: var(--txt);
-            fill: none;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
+            width: 50%; height: 50%; stroke: var(--txt); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
             transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
         }
 
         .dot-sender, .dot-content { opacity: 0; display: none; transition: opacity 0.2s ease 0.6s; }
@@ -404,7 +401,16 @@
 </head>
 <body>
 
-    <div class="section" id="page-intro">
+    <!-- BARRE DE NAVIGATION COMMUNE & UNIQUE (FIXE) -->
+    <div class="bottom-nav-bar" id="bottom-nav-bar" data-active="rahimanniv">
+        <div class="nav-indicator" id="nav-indicator"></div>
+        <a href="#rahimanniv" class="nav-icon-bubble" aria-label="Gâteau" data-target="rahimanniv"><svg viewBox="0 0 24 24"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20"/><path d="M7 8v3"/><path d="M12 8v3"/><path d="M17 8v3"/><path d="M12 4v1"/></svg></a>
+        <a href="#rahimaths" class="nav-icon-bubble" aria-label="Étoile" data-target="rahimaths"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></a>
+        <a href="#rahimessages" class="nav-icon-bubble" aria-label="Cœur" data-target="rahimessages"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></a>
+        <a href="#rahimood" class="nav-icon-bubble" aria-label="Cadeau" data-target="rahimood"><svg viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></a>
+    </div>
+
+    <div class="section" id="rahimanniv">
         <div class="section-title">RAHIMANNIV'</div>
         <div class="bento-container">
             <div class="bento-row">
@@ -424,21 +430,13 @@
                 <div class="bento-card card-rose-medium"><div style="font-weight: 700;">...</div><div class="stat-label-bottom">E8</div></div>
             </div>
         </div>
-
-        <div class="bottom-nav-bar" data-active="intro">
-            <div class="nav-indicator" id="nav-indicator"></div>
-            <a href="#page-intro" class="nav-icon-bubble" aria-label="Gâteau" data-target="intro"><svg viewBox="0 0 24 24"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20"/><path d="M7 8v3"/><path d="M12 8v3"/><path d="M17 8v3"/><path d="M12 4v1"/></svg></a>
-            <a href="#page-exploits" class="nav-icon-bubble" aria-label="Étoile" data-target="exploits"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></a>
-            <a href="#page-cloud" class="nav-icon-bubble" aria-label="Cœur" data-target="cloud"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></a>
-            <a href="#page-secret" class="nav-icon-bubble" aria-label="Cadeau" data-target="secret"><svg viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></a>
-        </div>
     </div>
 
-    <div class="section" id="page-exploits">
+    <div class="section" id="rahimaths">
         <div class="section-title">RAHIMATHS</div>
         <div class="bento-container">
             <div class="bento-row">
-                <div class="bento-card card-green-light"><div class="odometer" data-start="10" data-end="25" data-step="5"></div><div class="stat-label-bottom">RP écrits</div></div>
+                <div class="bento-card card-green-light"><div class="odometer" data-start="5" data-end="25" data-step="5"></div><div class="stat-label-bottom">RP écrits</div></div>
                 <div class="bento-card card-green-dark"><div class="odometer" data-start="0" data-end="5" data-step="1"></div><div class="stat-label-bottom">matchs de Quidditch arbitrés</div></div>
             </div>
             <div class="bento-row">
@@ -447,26 +445,18 @@
             <div class="bento-row">
                 <div class="bento-card card-green-deep">
                     <div class="odometer" data-start="0" data-end="2" data-step="1"></div><div class="stat-label-bottom">animations organisées<br><small>avec</small></div>
-                    <div class="odometer" data-start="55" data-end="75" data-step="5"></div><div class="stat-label-bottom">participations au total</div>
+                    <div class="odometer" data-start="50" data-end="75" data-step="5"></div><div class="stat-label-bottom">participations au total</div>
                 </div>
-                <div class="bento-card card-green-light"><div class="odometer" data-start="880" data-end="900" data-step="5"></div><div class="stat-label-bottom">messages postés sur le forum</div></div>
+                <div class="bento-card card-green-light"><div class="odometer" data-start="850" data-end="900" data-step="5"></div><div class="stat-label-bottom">messages postés sur le forum</div></div>
             </div>
             <div class="bento-row">
-                <div class="bento-card card-green-medium"><div style="font-weight: 700;">...</div><div class="stat-label-bottom">PR distribués ?</div></div>
-                <div class="bento-card card-green-dark"><div style="font-weight: 700;">...</div><div class="stat-label-bottom">sujets postés au mauvais endroits GNAHAHA</div></div>
+                <div class="bento-card card-green-medium"><div class="odometer" data-start="753" data-end="783" data-step="3"></div><div class="stat-label-bottom">PR distribués<br><small>(dont 612 positifs et 171 négatifs)</small></div></div>
+                <div class="bento-card card-green-dark"><div class="odometer" data-start="0" data-end="1" data-step="1"></div><div class="stat-label-bottom">sujet posté dans le mauvais forum</div></div>
             </div>
-        </div>
-
-        <div class="bottom-nav-bar" data-active="intro">
-            <div class="nav-indicator" id="nav-indicator"></div>
-            <a href="#page-intro" class="nav-icon-bubble" aria-label="Gâteau" data-target="intro"><svg viewBox="0 0 24 24"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20"/><path d="M7 8v3"/><path d="M12 8v3"/><path d="M17 8v3"/><path d="M12 4v1"/></svg></a>
-            <a href="#page-exploits" class="nav-icon-bubble" aria-label="Étoile" data-target="exploits"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></a>
-            <a href="#page-cloud" class="nav-icon-bubble" aria-label="Cœur" data-target="cloud"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></a>
-            <a href="#page-secret" class="nav-icon-bubble" aria-label="Cadeau" data-target="secret"><svg viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></a>
         </div>
     </div>
 
-    <div class="section" id="page-cloud">
+    <div class="section" id="rahimessages">
         <div class="section-title">RAHIMESSAGES</div>
         
 		<div class="controls-container">
@@ -538,17 +528,9 @@
                 <div class="dot-content">"Don't give up, it's a little complicated. HAD TO HAVE HIGH, HIGH HOPES FOR A LIVING."</div>
             </div>
         </div>
-
-        <div class="bottom-nav-bar" data-active="intro">
-            <div class="nav-indicator" id="nav-indicator"></div>
-            <a href="#page-intro" class="nav-icon-bubble" aria-label="Gâteau" data-target="intro"><svg viewBox="0 0 24 24"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20"/><path d="M7 8v3"/><path d="M12 8v3"/><path d="M17 8v3"/><path d="M12 4v1"/></svg></a>
-            <a href="#page-exploits" class="nav-icon-bubble" aria-label="Étoile" data-target="exploits"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></a>
-            <a href="#page-cloud" class="nav-icon-bubble" aria-label="Cœur" data-target="cloud"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></a>
-            <a href="#page-secret" class="nav-icon-bubble" aria-label="Cadeau" data-target="secret"><svg viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></a>
-        </div>
     </div>
 
-    <div class="section" id="page-secret">
+    <div class="section" id="rahimood">
         <div class="section-title">RAHIMOOD</div>
         <div class="bento-container">
             <div class="bento-row">
@@ -568,22 +550,15 @@
                 <div class="bento-card card-purple-2"><div style="font-weight: 700;">...</div><div class="stat-label-bottom">A</div></div>
             </div>
         </div>
-
-        <div class="bottom-nav-bar" data-active="intro">
-            <div class="nav-indicator" id="nav-indicator"></div>
-            <a href="#page-intro" class="nav-icon-bubble" aria-label="Gâteau" data-target="intro"><svg viewBox="0 0 24 24"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20"/><path d="M7 8v3"/><path d="M12 8v3"/><path d="M17 8v3"/><path d="M12 4v1"/></svg></a>
-            <a href="#page-exploits" class="nav-icon-bubble" aria-label="Étoile" data-target="exploits"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></a>
-            <a href="#page-cloud" class="nav-icon-bubble" aria-label="Cœur" data-target="cloud"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></a>
-            <a href="#page-secret" class="nav-icon-bubble" aria-label="Cadeau" data-target="secret"><svg viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></a>
-        </div>
     </div>
 
     <script>
-        /* --- GESTION DE LA NAVIGATION GLISSANTE --- */
-        const pages = ['intro', 'exploits', 'cloud', 'secret'];
+        /* --- GESTION DE LA NAVIGATION --- */
+        const pages = ['rahimanniv', 'rahimaths', 'rahimessages', 'rahimood'];
 
         function updateNavIndicator(activeTarget) {
-            document.querySelectorAll('.bottom-nav-bar').forEach(bar => {
+            const bar = document.getElementById('bottom-nav-bar');
+            if (bar) {
                 bar.setAttribute('data-active', activeTarget);
                 const indicator = bar.querySelector('.nav-indicator');
                 const targetLink = bar.querySelector(`[data-target="${activeTarget}"]`);
@@ -597,13 +572,13 @@
                         indicator.style.transform = `translateX(${leftPos - 12}px)`;
                     }
                 }
-            });
+            }
         }
 
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const id = entry.target.id.replace('page-', '');
+                    const id = entry.target.id;
                     if (pages.includes(id)) {
                         updateNavIndicator(id);
                     }
@@ -613,10 +588,17 @@
 
         document.querySelectorAll('.section').forEach(sec => sectionObserver.observe(sec));
 
+        // Application de l'effet fluide sur les boutons de navigation (résout le blocage de scroll-snap)
         document.querySelectorAll('.nav-icon-bubble').forEach(link => {
             link.addEventListener('click', (e) => {
-                const target = link.getAttribute('data-target');
-                updateNavIndicator(target);
+                e.preventDefault(); 
+                const targetId = link.getAttribute('data-target');
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                    updateNavIndicator(targetId);
+                }
             });
         });
 
@@ -689,8 +671,8 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             initOdometers();
-            exploitsObserver.observe(document.getElementById('page-exploits'));
-            updateNavIndicator('intro');
+            exploitsObserver.observe(document.getElementById('rahimaths'));
+            updateNavIndicator('rahimanniv');
         });
 
         /* --- PAGE 3 : CONSTELLATION & PALETTE --- */
