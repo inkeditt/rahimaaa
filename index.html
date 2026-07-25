@@ -132,7 +132,7 @@
             color: #523D57;
         }
 
-        /* --- STYLE DICTIONNAIRE DIRECTEMENT DANS LE BENTO --- */
+        /* --- STYLE DICTIONNAIRE INTACT (INCHANGÉ) --- */
         .dictionary-content {
             text-align: left;
             width: 100%;
@@ -182,10 +182,18 @@
             font-weight: 400;
         }
 
+        /* --- UNIFORMISATION DE LA POLICE DE LA DÉFINITION SUR TOUS LES AUTRES ENCADRÉS --- */
+        .bento-card .bento-text-content {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(0.7em, 1.3vw, 0.8em);
+            line-height: 1.35;
+            font-weight: 400;
+        }
+
         /* --- BARRE D'ICÔNES DE NAVIGATION COMMUNE & FIXE --- */
         .bottom-nav-bar {
             position: fixed;
-            bottom: 10px;
+            bottom: 15px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -239,12 +247,11 @@
             fill: none;
         }
 
-        /* Mode horizontal/ordinateur : Barre de navigation verticale fixe à droite */
         @media (min-aspect-ratio: 1/1) {
             .bottom-nav-bar {
                 position: fixed;
                 top: 50%;
-                right: 15px;
+                right: 22px;
                 bottom: auto;
                 left: auto;
                 transform: translateY(-50%);
@@ -324,7 +331,6 @@
         .card-rose-dark   { background-color: #A95770; color: #FFF8F5; box-shadow: 0 8px 20px rgba(74, 38, 56, 0.08); } 
         .card-rose-deep   { background-color: #C98F9F; color: #3D2230; box-shadow: 0 8px 20px rgba(74, 38, 56, 0.08); } 
 
-        /* Ajustements asymétriques fidèles au modèle de la page 1 (Image) */
         #rahimanniv .bento-row:nth-child(1) .bento-card:nth-child(1) { flex: 1.1; padding: 12px 14px; align-items: flex-start; text-align: left; }
         #rahimanniv .bento-row:nth-child(1) .bento-card:nth-child(2) { flex: 1.5; padding: 10px; }
         #rahimanniv .bento-row:nth-child(2) .bento-card:nth-child(1) { flex: 0.9; padding: 10px; }
@@ -379,7 +385,16 @@
         .digit-strip span { display: block; height: 1.1em; line-height: 1.1em; text-align: center; }
 
         /* --- BARRE DE RECHERCHE --- */
-        .controls-container { z-index: 20; width: 100%; max-width: 320px; flex-shrink: 0; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+        .controls-container { 
+            z-index: 20; 
+            width: 100%; 
+            max-width: 320px; 
+            flex-shrink: 0; 
+            margin: 0 auto; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
         .search-container {
             width: 100%; position: relative; display: flex; align-items: center; background: #ffffff;
             border: 2px solid rgba(184, 111, 93, 0.35); border-radius: 50px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03); transition: all 0.3s ease;
@@ -402,9 +417,9 @@
         .dropdown-item input[type="checkbox"] { cursor: pointer; accent-color: #B86F5D; width: 15px; height: 15px; }
         .dropdown-item:hover { background: rgba(184, 111, 93, 0.1); color: #8C4736; }
 
-        /* --- CONSTELLATION --- */
+        /* --- CONSTELLATION ORIGINAL (SANS SUPERPOSITION) --- */
         .constellation-container {
-            position: relative; width: 100%; max-width: 950px; height: 100%; max-height: 460px;
+            position: relative; width: 100%; max-width: 950px; height: 100%; max-height: 400px;
             margin: 0 auto; z-index: 5; padding: 10px; overflow: visible; flex-grow: 1;
         }
 
@@ -414,19 +429,13 @@
             left: 0; top: 0; border-radius: 50%; padding: 0; display: flex; justify-content: center; align-items: center;
             background-color: var(--c); cursor: pointer; box-shadow: 0 4px 16px rgba(80, 53, 47, 0.08);
             transform: translate(-50%, -50%); transform-origin: center center;
-            transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1), top 0.6s cubic-bezier(0.16, 1, 0.3, 1), width 0.6s cubic-bezier(0.16, 1, 0.3, 1), height 0.6s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.6s ease, opacity 0.3s ease;
-            z-index: 2; opacity: 1; touch-action: manipulation; overflow: hidden; will-change: left, top, width, height;
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            z-index: 2; opacity: 1; touch-action: manipulation; overflow: hidden;
         }
 
         .dot-card.is-hidden { opacity: 0 !important; pointer-events: none !important; }
 
-        .dot-card svg.image-icon {
-            width: 50%; height: 50%; stroke: var(--txt); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-        }
-
-        .dot-sender, .dot-content { opacity: 0; display: none; transition: opacity 0.2s ease 0.6s; }
+        .dot-sender, .dot-content { opacity: 0; display: none; transition: opacity 0.2s ease; }
         .dot-card { --txt: #4B4038; }
 
         /* --- ÉTAT NOM --- */
@@ -436,7 +445,6 @@
             box-shadow: 0 8px 22px rgba(80, 53, 47, 0.15);
             z-index: 30;
         }
-        .dot-card.state-name svg.image-icon { display: none; }
 
         .dot-card.state-name .dot-inner-box {
             display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; width: 100%; height: 100%; padding: 12px;
@@ -445,7 +453,6 @@
             width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;
             opacity: 1; font-weight: 700; font-size: 0.75em; color: var(--txt); text-align: center; line-height: 1.25;
         }
-        .dot-card.state-name .dot-sender > div { white-space: normal; overflow: visible; text-overflow: clip; max-width: 100%; }
         .name-group { display: inline-block; white-space: nowrap; }
         .name-group-wrap { display: inline; white-space: normal; text-align: center; }
 
@@ -463,7 +470,6 @@
             box-shadow: 0 14px 35px rgba(80, 53, 47, 0.2);
             z-index: 100;
         }
-        .dot-card.state-message svg.image-icon { display: none; }
 
         .dot-card.state-message .dot-inner-box {
             display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; width: 100%; height: 100%; padding: 14px;
@@ -488,12 +494,12 @@
         <a href="#rahimood" class="nav-icon-bubble" aria-label="Cadeau" data-target="rahimood"><svg viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></a>
     </div>
 
+    <!-- PAGE 1 : RAHIMANNIV' -->
     <div class="section" id="rahimanniv">
         <div class="section-title">RAHIMANNIV'</div>
         <div class="section-subtitle">« Un merveilleux anniversaire à la meilleure arbitre dont-le prénom-commence-par-R-et-finit-par-A de touts les temps ! »</div>
         
         <div class="bento-container">
-            <!-- Ligne 1 : Bloc bento dictionnaire (gauche) et grand bloc (droite) -->
             <div class="bento-row">
                 <div class="bento-card card-rose-light">
                     <div class="dictionary-content">
@@ -506,65 +512,65 @@
                     </div>
                 </div>
                 <div class="bento-card card-rose-dark">
-                    <div style="font-weight: 700;">...</div>
-                    <div class="stat-label-bottom">Dragooon</div>
+                    <div style="font-weight: 700;">Niveau Maître</div>
+                    <div class="stat-label-bottom bento-text-content">Dragooon (et des traumas)</div>
                 </div>
             </div>
-            <!-- Ligne 2 : Trois petits blocs asymétriques -->
             <div class="bento-row">
                 <div class="bento-card card-rose-medium">
-                    <div style="font-weight: 700;">...</div>
-                    <div class="stat-label-bottom">Blablabla</div>
+                    <div style="font-weight: 700;">+1000</div>
+                    <div class="stat-label-bottom bento-text-content">Patience légendaire</div>
                 </div>
                 <div class="bento-card card-rose-deep">
-                    <div style="font-weight: 700;">...</div>
-                    <div class="stat-label-bottom">MOUAHAHA</div>
+                    <div style="font-weight: 700;">MOUAHAHA</div>
+                    <div class="stat-label-bottom bento-text-content">Rire diabolique officiel</div>
                 </div>
                 <div class="bento-card card-rose-light">
-                    <div style="font-weight: 700;">...</div>
-                    <div class="stat-label-bottom">Isnsuenejd</div>
+                    <div style="font-weight: 700;">100%</div>
+                    <div class="stat-label-bottom bento-text-content">Génie absolu</div>
                 </div>
             </div>
-            <!-- Ligne 3 : Deux blocs de fin -->
             <div class="bento-row">
                 <div class="bento-card card-rose-dark">
-                    <div style="font-weight: 700;">...</div>
-                    <div class="stat-label-bottom">(plus d'inspi)</div>
+                    <div style="font-weight: 700;">Attention</div>
+                    <div class="stat-label-bottom bento-text-content">Ne pas nourrir après minuit</div>
                 </div>
                 <div class="bento-card card-rose-light">
-                    <div style="font-weight: 700;">...</div>
-                    <div class="stat-label-bottom">E6</div>
+                    <div style="font-weight: 700;">VIP</div>
+                    <div class="stat-label-bottom bento-text-content">Statut certifié adorable</div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- PAGE 2 : RAHIMATHS -->
     <div class="section" id="rahimaths">
         <div class="section-title">RAHIMATHS</div>
         <div class="section-subtitle">« Comme c’est connu de tout le monde que tu as une passion pour les nombres et les stats et les formules et les–… Bref, les trucs comme ça. »</div>
         
         <div class="bento-container">
             <div class="bento-row">
-                <div class="bento-card card-green-light"><div class="odometer" data-start="5" data-end="25" data-step="5"></div><div class="stat-label-bottom">RP écrits</div></div>
-                <div class="bento-card card-green-dark"><div class="odometer" data-start="0" data-end="5" data-step="1"></div><div class="stat-label-bottom">matchs de Quidditch arbitrés</div></div>
+                <div class="bento-card card-green-light"><div class="odometer" data-start="5" data-end="25" data-step="5"></div><div class="stat-label-bottom bento-text-content">RP écrits</div></div>
+                <div class="bento-card card-green-dark"><div class="odometer" data-start="0" data-end="5" data-step="1"></div><div class="stat-label-bottom bento-text-content">matchs de Quidditch arbitrés</div></div>
             </div>
             <div class="bento-row">
-                <div class="bento-card card-green-medium" style="flex: 1;"><div class="odometer" data-start="0" data-end="20" data-step="5"></div><div class="stat-label-bottom">sessions lancées du Ballet volant</div></div>
+                <div class="bento-card card-green-medium" style="flex: 1;"><div class="odometer" data-start="0" data-end="20" data-step="5"></div><div class="stat-label-bottom bento-text-content">sessions lancées du Ballet volant</div></div>
             </div>
             <div class="bento-row">
                 <div class="bento-card card-green-deep">
-                    <div class="odometer" data-start="0" data-end="2" data-step="1"></div><div class="stat-label-bottom">animations organisées<br><small>avec</small></div>
-                    <div class="odometer" data-start="50" data-end="75" data-step="5"></div><div class="stat-label-bottom">participations au total</div>
+                    <div class="odometer" data-start="0" data-end="2" data-step="1"></div><div class="stat-label-bottom bento-text-content">animations organisées<br><small>avec</small></div>
+                    <div class="odometer" data-start="50" data-end="75" data-step="5"></div><div class="stat-label-bottom bento-text-content">participations au total</div>
                 </div>
-                <div class="bento-card card-green-light"><div class="odometer" data-start="850" data-end="900" data-step="5"></div><div class="stat-label-bottom">messages postés sur le forum</div></div>
+                <div class="bento-card card-green-light"><div class="odometer" data-start="850" data-end="900" data-step="5"></div><div class="stat-label-bottom bento-text-content">messages postés sur le forum</div></div>
             </div>
             <div class="bento-row">
-                <div class="bento-card card-green-medium"><div class="odometer" data-start="753" data-end="783" data-step="3"></div><div class="stat-label-bottom">PR distribués<br><small>(dont 612 positifs et 171 négatifs)</small></div></div>
-                <div class="bento-card card-green-dark"><div class="odometer" data-start="0" data-end="1" data-step="1"></div><div class="stat-label-bottom">sujet posté dans le mauvais forum</div></div>
+                <div class="bento-card card-green-medium"><div class="odometer" data-start="753" data-end="783" data-step="3"></div><div class="stat-label-bottom bento-text-content">PR distribués<br><small>(dont 612 positifs et 171 négatifs)</small></div></div>
+                <div class="bento-card card-green-dark"><div class="odometer" data-start="0" data-end="1" data-step="1"></div><div class="stat-label-bottom bento-text-content">sujet posté dans le mauvais forum</div></div>
             </div>
         </div>
     </div>
 
+    <!-- PAGE 3 : RAHIMESSAGES -->
     <div class="section" id="rahimessages">
         <div class="section-title">RAHIMESSAGES</div>
         <div class="section-subtitle">« Preuve ultime que tu es, en effet, une personne adorable et gentille. Même si tu ne voudras sûrement jamais l’admettre. (On t’aime.) »</div>
@@ -640,32 +646,33 @@
         </div>
     </div>
 
+    <!-- PAGE 4 : RAHIMOOD -->
     <div class="section" id="rahimood">
         <div class="section-title">RAHIMOOD</div>
         <div class="section-subtitle">« Ooh, une page secrète supplémentaire ! En même temps comment voulez-vous dire tooout ce qu’il y a à dire sur une Rahima en seulement 3 pages ? »</div>
         
         <div class="bento-container">
             <div class="bento-row">
-                <div class="bento-card card-purple-1"><div style="font-weight: 700;">...</div><div class="stat-label-bottom">R</div></div>
-                <div class="bento-card card-purple-3"><div style="font-weight: 700;">...</div><div class="stat-label-bottom">A</div></div>
+                <div class="bento-card card-purple-1"><div style="font-weight: 700;">Reine</div><div class="stat-label-bottom bento-text-content">R</div></div>
+                <div class="bento-card card-purple-3"><div style="font-weight: 700;">Absolue</div><div class="stat-label-bottom bento-text-content">A</div></div>
             </div>
             <div class="bento-row">
-                <div class="bento-card card-purple-2"><div style="font-weight: 700;">...</div><div class="stat-label-bottom">H</div></div>
-                <div class="bento-card card-purple-4"><div style="font-weight: 700;">...</div><div class="stat-label-bottom">I</div></div>
+                <div class="bento-card card-purple-2"><div style="font-weight: 700;">Hilarante</div><div class="stat-label-bottom bento-text-content">H</div></div>
+                <div class="bento-card card-purple-4"><div style="font-weight: 700;">Incroyable</div><div class="stat-label-bottom bento-text-content">I</div></div>
             </div>
             <div class="bento-row">
-                <div class="bento-card card-purple-3"><div style="font-weight: 700;">...</div><div class="stat-label-bottom">M</div></div>
-                <div class="bento-card card-purple-1"><div style="font-weight: 700;">...</div><div class="stat-label-bottom">A</div></div>
+                <div class="bento-card card-purple-3"><div style="font-weight: 700;">Magnifique</div><div class="stat-label-bottom bento-text-content">M</div></div>
+                <div class="bento-card card-purple-1"><div style="font-weight: 700;">Adorable</div><div class="stat-label-bottom bento-text-content">A</div></div>
             </div>
             <div class="bento-row">
-                <div class="bento-card card-purple-4"><div style="font-weight: 700;">...</div><div class="stat-label-bottom">A</div></div>
-                <div class="bento-card card-purple-2"><div style="font-weight: 700;">...</div><div class="stat-label-bottom">A</div></div>
+                <div class="bento-card card-purple-4"><div style="font-weight: 700;">Artiste</div><div class="stat-label-bottom bento-text-content">A</div></div>
+                <div class="bento-card card-purple-2"><div style="font-weight: 700;">Aussi vieille qu'elle le prétend</div><div class="stat-label-bottom bento-text-content">A</div></div>
             </div>
         </div>
     </div>
 
     <script>
-        /* --- GESTION DE LA NAVIGATION --- */
+        /* --- GESTION DE LA NAVIGATION & URL SANS HASH POLLUANT --- */
         const pages = ['rahimanniv', 'rahimaths', 'rahimessages', 'rahimood'];
 
         function updateNavIndicator(activeTarget) {
@@ -693,6 +700,7 @@
                     const id = entry.target.id;
                     if (pages.includes(id)) {
                         updateNavIndicator(id);
+                        history.replaceState(null, null, ' ');
                     }
                 }
             });
@@ -709,6 +717,7 @@
                 if (targetSection) {
                     targetSection.scrollIntoView({ behavior: 'smooth' });
                     updateNavIndicator(targetId);
+                    history.replaceState(null, null, ' ');
                 }
             });
         });
@@ -784,9 +793,10 @@
             initOdometers();
             exploitsObserver.observe(document.getElementById('rahimaths'));
             updateNavIndicator('rahimanniv');
+            history.replaceState(null, null, ' ');
         });
 
-        /* --- PAGE 3 : CONSTELLATION & PALETTE --- */
+        /* --- PAGE 3 : CONSTELLATION ORIGINALE (SANS AUCUNE SUPERPOSITION) --- */
         const container = document.getElementById('cloud-container');
         const dots = Array.from(container.querySelectorAll('.dot-card'));
         let originalLayout = new Map();
@@ -1033,36 +1043,38 @@
                 return { dot, x: clamped.x, y: clamped.y, radius: size / 2 };
             });
 
-            for (let k = 0; k < 100; k++) {
-                let collision = false;
-                for (let i = 0; i < othersPos.length; i++) {
-                    let p = othersPos[i];
-                    let dxA = p.x - clampedActive.x, dyA = p.y - clampedActive.y;
-                    let distA = Math.hypot(dxA, dyA) || 1;
-                    let minDistA = activeRadius + p.radius + 12;
-                    if (distA < minDistA) {
-                        collision = true;
-                        p.x = clampedActive.x + (dxA / distA) * minDistA;
-                        p.y = clampedActive.y + (dyA / distA) * minDistA;
-                    }
-                    for (let j = i + 1; j < othersPos.length; j++) {
-                        let a = othersPos[i], b = othersPos[j];
-                        let dx = b.x - a.x, dy = b.y - a.y;
+            for (let i = 0; i < 40; i++) {
+                let hasCollision = false;
+                for (let a = 0; a < othersPos.length; a++) {
+                    for (let b = a + 1; b < othersPos.length; b++) {
+                        let p1 = othersPos[a], p2 = othersPos[b];
+                        let dx = p2.x - p1.x, dy = p2.y - p1.y;
                         let dist = Math.hypot(dx, dy) || 1;
-                        let req = a.radius + b.radius + 8;
+                        let req = p1.radius + p2.radius + (interactionMode === 'message' ? 12 : 8);
                         if (dist < req) {
-                            collision = true;
+                            hasCollision = true;
                             let overlap = (req - dist) * 0.5;
-                            a.x -= (dx / dist) * overlap; a.y -= (dy / dist) * overlap;
-                            b.x += (dx / dist) * overlap; b.y += (dy / dist) * overlap;
+                            p1.x -= (dx / dist) * overlap;
+                            p1.y -= (dy / dist) * overlap;
+                            p2.x += (dx / dist) * overlap;
+                            p2.y += (dy / dist) * overlap;
                         }
                     }
                 }
                 othersPos.forEach(p => {
                     let clamped = clampPositionToContainer(p.x, p.y, p.radius);
                     p.x = clamped.x; p.y = clamped.y;
+                    let dx = p.x - clampedActive.x, dy = p.y - clampedActive.y;
+                    let dist = Math.hypot(dx, dy) || 1;
+                    let minD = activeRadius + p.radius + (interactionMode === 'message' ? 14 : 10);
+                    if (dist < minD) {
+                        p.x = clampedActive.x + (dx / dist) * minD;
+                        p.y = clampedActive.y + (dy / dist) * minD;
+                        let reClamp = clampPositionToContainer(p.x, p.y, p.radius);
+                        p.x = reClamp.x; p.y = reClamp.y;
+                    }
                 });
-                if (!collision) break;
+                if (!hasCollision) break;
             }
 
             othersPos.forEach(p => {
