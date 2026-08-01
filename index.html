@@ -132,7 +132,7 @@
             color: #523D57;
         }
 
-        /* --- STYLE DICTIONNAIRE INTACT (INCHANGÉ) --- */
+        /* --- STYLE DICTIONNAIRE INTACT --- */
         .dictionary-content {
             text-align: left;
             width: 100%;
@@ -182,7 +182,6 @@
             font-weight: 400;
         }
 
-        /* --- UNIFORMISATION DE LA POLICE DE LA DÉFINITION SUR TOUS LES AUTRES ENCADRÉS --- */
         .bento-card .bento-text-content {
             font-family: 'Montserrat', sans-serif;
             font-size: clamp(0.7em, 1.3vw, 0.8em);
@@ -325,7 +324,6 @@
             z-index: 20;
         }
 
-        /* --- PAGES 1, 2, 4 STYLES --- */
         .card-rose-light  { background-color: #F8C8D4; color: #4A2638; box-shadow: 0 8px 20px rgba(74, 38, 56, 0.08); } 
         .card-rose-medium { background-color: #D98FA3; color: #FFF5F6; box-shadow: 0 8px 20px rgba(74, 38, 56, 0.08); } 
         .card-rose-dark   { background-color: #A95770; color: #FFF8F5; box-shadow: 0 8px 20px rgba(74, 38, 56, 0.08); } 
@@ -417,20 +415,42 @@
         .dropdown-item input[type="checkbox"] { cursor: pointer; accent-color: #B86F5D; width: 15px; height: 15px; }
         .dropdown-item:hover { background: rgba(184, 111, 93, 0.1); color: #8C4736; }
 
-        /* --- CONSTELLATION ORIGINAL (SANS SUPERPOSITION) --- */
+        /* --- CONSTELLATION FLUIDE & COUSSIN D'AIR --- */
         .constellation-container {
             position: relative; width: 100%; max-width: 950px; height: 100%; max-height: 400px;
             margin: 0 auto; z-index: 5; padding: 10px; overflow: visible; flex-grow: 1;
         }
 
         .dot-card {
-            position: absolute; width: var(--dot-size, 30px); height: var(--dot-size, 30px);
-            aspect-ratio: 1 / 1 !important; min-width: var(--dot-size, 30px); min-height: var(--dot-size, 30px);
-            left: 0; top: 0; border-radius: 50%; padding: 0; display: flex; justify-content: center; align-items: center;
-            background-color: var(--c); cursor: pointer; box-shadow: 0 4px 16px rgba(80, 53, 47, 0.08);
-            transform: translate(-50%, -50%); transform-origin: center center;
-            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-            z-index: 2; opacity: 1; touch-action: manipulation; overflow: hidden;
+            position: absolute; 
+            width: var(--dot-size, 30px); 
+            height: var(--dot-size, 30px);
+            aspect-ratio: 1 / 1 !important; 
+            min-width: var(--dot-size, 30px); 
+            min-height: var(--dot-size, 30px);
+            left: 0; top: 0; 
+            border-radius: 50%; 
+            padding: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            background-color: var(--c); 
+            cursor: pointer; 
+            box-shadow: 0 4px 16px rgba(80, 53, 47, 0.08);
+            transform: translate(-50%, -50%); 
+            transform-origin: center center;
+            /* Transition fluide et douce comme sur un coussin d'air, sans accroc */
+            transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                        top 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                        width 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                        height 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                        background-color 0.4s ease,
+                        box-shadow 0.4s ease;
+            z-index: 2; 
+            opacity: 1; 
+            touch-action: manipulation; 
+            overflow: hidden;
+            will-change: left, top, width, height;
         }
 
         .dot-card.is-hidden { opacity: 0 !important; pointer-events: none !important; }
@@ -633,7 +653,7 @@
             </div>
             <div class="dot-card" data-name="Adeline Sgaeyl" data-cat="Joueur.euse de Quidditch" data-house="Serdaigle" data-gender="female" style="--dot-size: 38px;">
                 <div class="dot-sender">Adeline Sgaeyl</div>
-                <div class="dot-content">Mais nooon, maintenant je vais enfin pouvoir te dire que tu es une vieille sur le site! Un immense merci pour toute l'énergie que tu mets à chaque arbitrage.</div>
+                <div class="dot-content">But nooon, maintenant je vais enfin pouvoir te dire que tu es une vieille sur le site! Un immense merci pour toute l'énergie que tu mets à chaque arbitrage.</div>
             </div>
             <div class="dot-card" data-name="Adeline Sgaeyl" data-cat="Joueur.euse de Quidditch" data-house="Serdaigle" data-gender="female" style="--dot-size: 36px;">
                 <div class="dot-sender">Adeline Sgaeyl</div>
@@ -796,7 +816,7 @@
             history.replaceState(null, null, ' ');
         });
 
-        /* --- PAGE 3 : CONSTELLATION ORIGINALE (SANS AUCUNE SUPERPOSITION) --- */
+        /* --- PAGE 3 : CONSTELLATION FLUIDE & COUSSIN D'AIR (SANS TREMBLEMENT) --- */
         const container = document.getElementById('cloud-container');
         const dots = Array.from(container.querySelectorAll('.dot-card'));
         let originalLayout = new Map();
@@ -1014,23 +1034,17 @@
             return Math.max(isMessageState ? 110 : 90, Math.min(isMessageState ? 380 : 260, diameter));
         }
 
-        function applyTemporaryLayout(activeDot, activeSize) {
+        function computeStableLayout(activeDot, activeSize) {
             const original = originalLayout.get(activeDot);
-            if (!original) return;
+            if (!original) return { activePos: { x: original.x, y: original.y, radius: activeSize / 2 }, othersPos: [] };
+            
             const activeRadius = activeSize / 2;
             const clampedActive = clampPositionToContainer(original.x, original.y, activeRadius);
             
-            activeDot.style.left = `${clampedActive.x}px`;
-            activeDot.style.top = `${clampedActive.y}px`;
-
             const others = getVisibleDots().filter(d => d !== activeDot);
             const othersPos = others.map(dot => {
                 const pos = originalLayout.get(dot);
                 let size = (interactionMode === 'message') ? Math.max(16, pos.width * 0.65) : pos.width;
-                if (interactionMode === 'message') {
-                    dot.style.setProperty('--dot-size', `${size}px`);
-                    dot.style.width = `${size}px`; dot.style.height = `${size}px`;
-                }
                 let dx = pos.x - clampedActive.x, dy = pos.y - clampedActive.y;
                 let dist = Math.hypot(dx, dy) || 1;
                 let minD = activeRadius + (size / 2) + (interactionMode === 'message' ? 14 : 10);
@@ -1040,7 +1054,7 @@
                     y = clampedActive.y + (dy / dist) * minD;
                 }
                 let clamped = clampPositionToContainer(x, y, size / 2);
-                return { dot, x: clamped.x, y: clamped.y, radius: size / 2 };
+                return { dot, x: clamped.x, y: clamped.y, radius: size / 2, size };
             });
 
             for (let i = 0; i < 40; i++) {
@@ -1077,7 +1091,24 @@
                 if (!hasCollision) break;
             }
 
-            othersPos.forEach(p => {
+            return {
+                activePos: { x: clampedActive.x, y: clampedActive.y, radius: activeRadius },
+                othersPos
+            };
+        }
+
+        function applyTemporaryLayout(activeDot, activeSize) {
+            const layout = computeStableLayout(activeDot, activeSize);
+            
+            activeDot.style.left = `${layout.activePos.x}px`;
+            activeDot.style.top = `${layout.activePos.y}px`;
+
+            layout.othersPos.forEach(p => {
+                if (interactionMode === 'message') {
+                    p.dot.style.setProperty('--dot-size', `${p.size}px`);
+                    p.dot.style.width = `${p.size}px`; 
+                    p.dot.style.height = `${p.size}px`;
+                }
                 p.dot.style.left = `${p.x}px`;
                 p.dot.style.top = `${p.y}px`;
             });
@@ -1100,10 +1131,12 @@
             }
 
             const size = calculateCompactDiameter(dot, false);
-            void dot.offsetWidth;
-            dot.style.setProperty('--dot-size', `${size}px`);
-            dot.style.width = `${size}px`; dot.style.height = `${size}px`;
             applyTemporaryLayout(dot, size);
+            
+            // Application propre de la taille finale sans saccade
+            dot.style.setProperty('--dot-size', `${size}px`);
+            dot.style.width = `${size}px`; 
+            dot.style.height = `${size}px`;
         }
 
         function showMessage(dot) {
@@ -1126,10 +1159,12 @@
             if (!innerBox.contains(content)) innerBox.appendChild(content);
 
             const size = calculateCompactDiameter(dot, true);
-            void dot.offsetWidth;
-            dot.style.setProperty('--dot-size', `${size}px`);
-            dot.style.width = `${size}px`; dot.style.height = `${size}px`;
             applyTemporaryLayout(dot, size);
+            
+            // Application propre de la taille finale sans saccade
+            dot.style.setProperty('--dot-size', `${size}px`);
+            dot.style.width = `${size}px`; 
+            dot.style.height = `${size}px`;
         }
 
         dots.forEach(dot => {
@@ -1214,7 +1249,7 @@
 
         window.addEventListener('resize', () => {
             clearTimeout(window.resizeTimer);
-            window.resizeTimer = setTimeout(() => { restoreOriginalLayout(); calculateOriginalLayout(); updateNavIndicator(document.querySelector('.bottom-nav-bar').getAttribute('data-active')); }, 250);
+            window.resizeTimer = setTimeout(() => { restoreOriginalLayout(); calculateOriginalLayer(); updateNavIndicator(document.querySelector('.bottom-nav-bar').getAttribute('data-active')); }, 250);
         });
 
         window.matchMedia('(hover: none)').addEventListener('change', e => { isMobile = e.matches; });
