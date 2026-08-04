@@ -1,739 +1,606 @@
-/* ==========================================================================
-   VARIABLES CSS & PALETTES DE COULEURS (WCAG AA conformes)
-   ========================================================================== */
-:root {
-    /* Typographies */
-    --font-title: 'Syne', sans-serif;
-    --font-serif: 'Instrument Serif', serif;
-    --font-sans: 'Manrope', sans-serif;
-    --font-mono: 'Space Grotesk', monospace;
+/**
+ * ==========================================================================
+ * SCRIPT PRINCIPAL - RAHIMANNIVERSAIRE
+ * ==========================================================================
+ * Gestion du scroll intelligent (snapping assisté), de la navigation, 
+ * des odomètres mécaniques et de la constellation interactive de bulles.
+ */
 
-    /* Palette Rose (Section 1) */
-    --rose-bg: #FFF5F6;
-    --rose-text: #4A2638;
-    --rose-title: #9A536A;
-    --rose-sub: #7A3F52;
-    --rose-c1: #F8C8D4;
-    --rose-c2: #D98FA3;
-    --rose-c3: #A95770;
-    --rose-c4: #C98F9F;
+'use strict';
 
-    /* Palette Verte (Section 2) */
-    --green-bg: #F4F8F3;
-    --green-text: #172922;
-    --green-title: #527A64;
-    --green-sub: #385445;
-    --green-c1: #BCD3C2;
-    --green-c2: #8EBA9A;
-    --green-c3: #4C7561;
-    --green-c4: #668B78;
-
-    /* Palette Beige (Section 3) */
-    --beige-bg: #FBF4E8;
-    --beige-text: #4B4038;
-    --beige-title: #806653;
-    --beige-sub: #5E4C3D;
-
-    /* Palette Violette (Section 4) */
-    --purple-bg: #F7F2F9;
-    --purple-text: #38263F;
-    --purple-title: #705477;
-    --purple-sub: #523D57;
-    --purple-c1: #E6D8EB;
-    --purple-c2: #C5A8CC;
-    --purple-c3: #80618A;
-    --purple-c4: #A77BB0;
-}
+const pages = ['rahimanniv', 'rahimaths', 'rahimessages', 'rahimood'];
 
 /* ==========================================================================
-   RESET & CONFIGURATION GLOBALE DU SCROLL (Snap mobile-like)
+   1. GESTION DE LA NAVIGATION ET MISE À JOUR VISUELLE
    ========================================================================== */
-html {
-    scroll-behavior: smooth;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    overflow: hidden;
-}
 
-body {
-    font-family: var(--font-sans);
-    margin: 0;
-    padding: 0;
-    background-color: #ffffff;
-    color: var(--beige-text);
-    -webkit-tap-highlight-color: transparent;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-    -webkit-overflow-scrolling: touch;
-}
-
-* {
-    box-sizing: border-box;
-}
-
-/* ==========================================================================
-   SECTIONS (100vh pleines pages)
-   ========================================================================== */
-.section {
-    height: 100vh;
-    height: 100dvh;
-    width: 100vw;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 24px 20px 50px 20px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    gap: 12px;
-}
-
-.section-title {
-    font-family: var(--font-title);
-    font-weight: 800;
-    font-size: clamp(1.3em, 3.2vw, 2em);
-    text-transform: uppercase;
-    letter-spacing: -0.04em;
-    z-index: 10;
-    flex-shrink: 0;
-    margin: 0;
-    text-align: center;
-    width: 100%;
-}
-
-.section-subtitle {
-    font-size: clamp(0.75em, 1.6vw, 0.95em);
-    font-weight: 400;
-    font-style: italic;
-    margin: 0;
-    z-index: 10;
-    flex-shrink: 0;
-    max-width: 600px;
-    line-height: 1.35;
-    opacity: 0.85;
-}
-
-/* Identité visuelle par page */
-#rahimanniv { background-color: var(--rose-bg); color: var(--rose-text); }
-#rahimanniv .section-title { color: var(--rose-title); }
-#rahimanniv .section-subtitle { color: var(--rose-sub); }
-
-#rahimaths { background-color: var(--green-bg); color: var(--green-text); }
-#rahimaths .section-title { color: var(--green-title); }
-#rahimaths .section-subtitle { color: var(--green-sub); }
-
-#rahimessages { background-color: var(--beige-bg); color: var(--beige-text); }
-#rahimessages .section-title { color: var(--beige-title); }
-#rahimessages .section-subtitle { color: var(--beige-sub); }
-
-#rahimood { background-color: var(--purple-bg); color: var(--purple-text); }
-#rahimood .section-title { color: var(--purple-title); }
-#rahimood .section-subtitle { color: var(--purple-sub); }
-
-/* ==========================================================================
-   NAVIGATION FLOTTANTE & GLASSMORPHISM
-   ========================================================================== */
-.bottom-nav-bar {
-    position: fixed;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 18px;
-    z-index: 1000;
-    padding: 4px 12px;
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border-radius: 50px;
-}
-
-.nav-indicator {
-    position: absolute;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    top: 4px;
-    left: 12px;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease;
-    z-index: 1;
-    pointer-events: none;
-}
-
-.nav-icon-bubble {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    text-decoration: none;
-    transition: transform 0.2s ease;
-    background-color: transparent;
-    position: relative;
-    z-index: 2;
-    cursor: pointer;
-}
-
-.nav-icon-bubble:hover {
-    transform: scale(1.1);
-}
-
-.nav-icon-bubble svg {
-    width: 16px;
-    height: 16px;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    fill: none;
-}
-
-/* Adaptation Desktop (Navigation verticale à droite) vs Mobile */
-@media (min-aspect-ratio: 1/1) {
-    .bottom-nav-bar {
-        position: fixed;
-        top: 50%;
-        right: 22px;
-        bottom: auto;
-        left: auto;
-        transform: translateY(-50%);
-        flex-direction: column;
-        gap: 18px;
-        padding: 12px 4px;
-        border-radius: 50px;
+/**
+ * Met à jour l'indicateur actif de la barre de navigation flottante de manière fluide.
+ * @param {string} activeTarget - Identifiant de la section active.
+ */
+function updateNavIndicator(activeTarget) {
+    const bar = document.getElementById('bottom-nav-bar');
+    if (bar) {
+        bar.setAttribute('data-active', activeTarget);
+        const indicator = bar.querySelector('.nav-indicator');
+        const targetLink = bar.querySelector(`[data-target="${activeTarget}"]`);
+        if (indicator && targetLink) {
+            const isHorizontal = window.matchMedia('(min-aspect-ratio: 1/1)').matches;
+            if (isHorizontal) {
+                const topPos = targetLink.offsetTop;
+                indicator.style.transform = `translateY(${topPos - 12}px)`;
+            } else {
+                const leftPos = targetLink.offsetLeft;
+                indicator.style.transform = `translateX(${leftPos - 12}px)`;
+            }
+        }
     }
-    .nav-indicator {
-        top: 12px;
-        left: 4px;
+}
+
+// Observation des sections pour synchroniser l'UI au défilement
+const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const id = entry.target.id;
+            if (pages.includes(id)) {
+                updateNavIndicator(id);
+                history.replaceState(null, null, ' ');
+            }
+        }
+    });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.section').forEach(sec => sectionObserver.observe(sec));
+
+// Clic sur les liens de navigation avec défilement fluide direct
+document.querySelectorAll('.nav-icon-bubble').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault(); 
+        const targetId = link.getAttribute('data-target');
+        const targetSection = document.getElementById(targetId);
+        
+        if (targetSection) {
+            // Mise à jour immédiate de l'indicateur pour éviter tout bug de trajectoire
+            updateNavIndicator(targetId);
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+            history.replaceState(null, null, ' ');
+        }
+    });
+});
+
+
+/* ==========================================================================
+   2. ODOMÈTRE MÉCANIQUE (PAGE 2)
+   ========================================================================== */
+
+/**
+ * Initialise les roulettes mécaniques pour les compteurs statistiques.
+ */
+function initOdometers() {
+    document.querySelectorAll('.odometer').forEach(odo => {
+        const startNum = parseInt(odo.getAttribute('data-start'), 10);
+        const endNum = parseInt(odo.getAttribute('data-end'), 10);
+        const step = parseInt(odo.getAttribute('data-step') || "5", 10);
+        
+        const sequence = [];
+        for (let i = startNum; i <= endNum; i += step) sequence.push(i.toString());
+        if (sequence[sequence.length - 1] !== endNum.toString()) sequence.push(endNum.toString());
+        
+        const maxLen = sequence[sequence.length - 1].length;
+        const columnsData = [];
+        odo.innerHTML = '';
+        
+        for (let colIdx = 0; colIdx < maxLen; colIdx++) {
+            const colDiv = document.createElement('div');
+            colDiv.className = 'digit-col';
+            const stripDiv = document.createElement('div');
+            stripDiv.className = 'digit-strip';
+            
+            const digitPath = [];
+            sequence.forEach(numStr => {
+                const padded = numStr.padStart(maxLen, '0');
+                const char = padded[colIdx];
+                if (digitPath.length === 0 || digitPath[digitPath.length - 1] !== char) {
+                    digitPath.push(char);
+                }
+            });
+            
+            digitPath.forEach(char => {
+                const span = document.createElement('span');
+                span.textContent = char;
+                stripDiv.appendChild(span);
+            });
+            
+            colDiv.appendChild(stripDiv);
+            odo.appendChild(colDiv);
+            columnsData.push({ strip: stripDiv, stepsCount: digitPath.length });
+        }
+        
+        odo._animate = () => {
+            columnsData.forEach(col => {
+                col.strip.style.transition = 'none';
+                col.strip.style.transform = 'translateY(0)';
+                if (col.stepsCount > 1) {
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            const maxOffset = (col.stepsCount - 1) * 1.1;
+                            col.strip.style.transition = 'transform 2.2s cubic-bezier(0.2, 0.8, 0.2, 1)';
+                            col.strip.style.transform = `translateY(-${maxOffset}em)`;
+                        });
+                    });
+                }
+            });
+        };
+    });
+}
+
+const exploitsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.querySelectorAll('.odometer').forEach(odo => { if (odo._animate) odo._animate(); });
+        }
+    });
+}, { threshold: 0.4 });
+
+
+/* ==========================================================================
+   3. CONSTELLATION FLUIDE & SIMULATION DE FORCES (PAGE 3)
+   ========================================================================== */
+
+const container = document.getElementById('cloud-container');
+const dots = container ? Array.from(container.querySelectorAll('.dot-card')) : [];
+let originalLayout = new Map();
+let activeDot = null;
+let interactionMode = 'none';
+let isMobile = window.matchMedia('(hover: none)').matches;
+
+const brownColorPairs = [
+    { dark: '#806653', light: '#F5EDE5' }, { dark: '#8A6D5B', light: '#F6EEE6' },
+    { dark: '#92715D', light: '#F7EFE7' }, { dark: '#987663', light: '#F7F0E8' },
+    { dark: '#9F7B66', light: '#F8F0E8' }, { dark: '#A4816B', light: '#F8F1E9' },
+    { dark: '#AA866E', light: '#F9F1E9' }, { dark: '#B08B72', light: '#F9F2EA' },
+    { dark: '#B58F77', light: '#F9F2EB' }, { dark: '#BA957D', light: '#FAF3EC' },
+    { dark: '#C09B82', light: '#FAF3ED' }, { dark: '#C5A087', light: '#FAF4EE' }
+];
+
+// Attribution aléatoire de nuances de marron chaleureuses
+dots.forEach((dot) => {
+    const randomPair = brownColorPairs[Math.floor(Math.random() * brownColorPairs.length)];
+    dot.style.setProperty('--c', randomPair.dark);
+    dot.style.setProperty('--bg-msg', randomPair.light);
+});
+
+const nameCounts = {};
+dots.forEach(dot => {
+    const name = dot.getAttribute('data-name') || '';
+    if(name) nameCounts[name] = (nameCounts[name] || 0) + 1;
+});
+
+const currentIndexes = {};
+dots.forEach(dot => {
+    const contentDiv = dot.querySelector('.dot-content');
+    if (contentDiv) {
+        dot.dataset.fullText = contentDiv.textContent.trim();
     }
-    .bottom-nav-bar[data-active="rahimanniv"] .nav-indicator { transform: translateY(0px); }
-    .bottom-nav-bar[data-active="rahimaths"] .nav-indicator { transform: translateY(52px); }
-    .bottom-nav-bar[data-active="rahimessages"] .nav-indicator { transform: translateY(104px); }
-    .bottom-nav-bar[data-active="rahimood"] .nav-indicator { transform: translateY(156px); }
+
+    const senderDiv = dot.querySelector('.dot-sender');
+    if (!senderDiv) return;
+    const name = dot.getAttribute('data-name') || '';
+    const rawCat = dot.getAttribute('data-cat') || '';
+    const house = dot.getAttribute('data-house') || '';
+    
+    // Construction propre du groupe en italique (sans tirets)
+    let categoryText = rawCat;
+    if (house) {
+        categoryText = `${rawCat} (${house})`;
+    }
+    
+    currentIndexes[name] = (currentIndexes[name] || 0) + 1;
+    const total = nameCounts[name];
+    const countStr = total > 1 ? `<div class="dot-count">${currentIndexes[name]}/${total}</div>` : '';
+
+    const words = name.split(' ');
+    let formattedNameHtml = words.map(w => `<span class="name-group">${w.replace(/-/g, '&#8209;')}</span>`).join(' ');
+
+    senderDiv.innerHTML = `
+        <div class="name-group-wrap">${formattedNameHtml}</div>
+        <div class="dot-category">${categoryText}</div>
+        ${countStr}
+    `;
+});
+
+function getBaseSize(dot) {
+    const value = getComputedStyle(dot).getPropertyValue('--dot-size').trim();
+    const size = parseFloat(value);
+    return Number.isFinite(size) ? size : 30;
 }
 
-@media not all and (min-aspect-ratio: 1/1) {
-    .bottom-nav-bar[data-active="rahimanniv"] .nav-indicator { transform: translateX(0px); }
-    .bottom-nav-bar[data-active="rahimaths"] .nav-indicator { transform: translateX(52px); }
-    .bottom-nav-bar[data-active="rahimessages"] .nav-indicator { transform: translateX(104px); }
-    .bottom-nav-bar[data-active="rahimood"] .nav-indicator { transform: translateX(156px); }
+function getVisibleDots() {
+    return dots.filter(dot => !dot.classList.contains('is-hidden'));
 }
 
-/* Couleurs des indicateurs par page active */
-.bottom-nav-bar[data-active="rahimanniv"] .nav-indicator { background-color: rgba(217, 143, 163, 0.4); }
-.bottom-nav-bar[data-active="rahimanniv"] .nav-icon-bubble svg { stroke: var(--rose-text); }
-
-.bottom-nav-bar[data-active="rahimaths"] .nav-indicator { background-color: rgba(142, 186, 154, 0.4); }
-.bottom-nav-bar[data-active="rahimaths"] .nav-icon-bubble svg { stroke: var(--green-text); }
-
-.bottom-nav-bar[data-active="rahimessages"] .nav-indicator { background-color: rgba(197, 160, 135, 0.4); }
-.bottom-nav-bar[data-active="rahimessages"] .nav-icon-bubble svg { stroke: var(--beige-text); }
-
-.bottom-nav-bar[data-active="rahimood"] .nav-indicator { background-color: rgba(197, 168, 204, 0.4); }
-.bottom-nav-bar[data-active="rahimood"] .nav-icon-bubble svg { stroke: var(--purple-text); }
-
-/* ==========================================================================
-   GRILLES BENTO & CARTES (Pages 1 & 4)
-   ========================================================================== */
-.bento-container {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    width: 100%;
-    max-width: 580px;
-    margin: 0 auto;
-    z-index: 10;
-    flex-grow: 0;
-    padding: 2px;
+function getDotRadius(dot) {
+    const width = parseFloat(dot.style.getPropertyValue('--dot-size')) || parseFloat(dot.dataset.baseWidth) || getBaseSize(dot);
+    return width / 2;
 }
 
-.bento-row {
-    display: flex;
-    gap: 6px;
-    width: 100%;
-    align-items: stretch;
+function clampPositionToContainer(x, y, radius) {
+    const W = container.clientWidth;
+    const H = container.clientHeight;
+    return {
+        x: Math.max(radius + 4, Math.min(W - radius - 4, x)),
+        y: Math.max(radius + 4, Math.min(H - radius - 4, y))
+    };
 }
 
-.bento-card {
-    padding: 10px 12px;
-    border-radius: 16px;
-    text-align: center;
-    transition: transform 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /* Correction du flou : suppression de will-change: transform */
+function calculateGap(visibleDots) {
+    const W = container.clientWidth;
+    const H = container.clientHeight;
+    const radii = visibleDots.map(dot => getDotRadius(dot));
+
+    for (let gap = 30; gap >= 8; gap -= 1) {
+        const totalDiameter = radii.reduce((sum, radius) => sum + radius * 2, 0);
+        const avgDiameter = totalDiameter / Math.max(radii.length, 1);
+        const approxCols = Math.max(1, Math.floor(W / (avgDiameter + gap)));
+        const approxRows = Math.max(1, Math.ceil(visibleDots.length / approxCols));
+        if (approxRows * (avgDiameter + gap) <= H * 0.9) return gap;
+    }
+    return 8;
 }
 
-.bento-card:hover {
-    transform: scale(1.02);
-    z-index: 20;
+function calculateOriginalLayout() {
+    const visibleDots = getVisibleDots();
+    if (!visibleDots.length) return;
+    const W = container.clientWidth;
+    const H = container.clientHeight;
+    const centerX = W / 2;
+    const centerY = H / 2;
+    const gap = calculateGap(visibleDots);
+
+    const positions = visibleDots.map((dot, index) => {
+        const radius = getDotRadius(dot);
+        const angle = index * 2.399963;
+        const spread = Math.min(W, H) * 0.22;
+        const randomOffset = (Math.random() - 0.5) * 30;
+        
+        const clamped = clampPositionToContainer(centerX + Math.cos(angle) * spread + randomOffset, centerY + Math.sin(angle) * spread + randomOffset, radius);
+        return { dot, x: clamped.x, y: clamped.y, radius };
+    });
+
+    for (let i = 0; i < 300; i++) {
+        let hasCollision = false;
+        for (let a = 0; a < positions.length; a++) {
+            for (let b = a + 1; b < positions.length; b++) {
+                let p1 = positions[a], p2 = positions[b];
+                let dx = p2.x - p1.x, dy = p2.y - p1.y;
+                let dist = Math.hypot(dx, dy) || 1;
+                let req = p1.radius + p2.radius + gap;
+                if (dist < req) {
+                    hasCollision = true;
+                    let overlap = (req - dist) * 0.5;
+                    p1.x -= (dx / dist) * overlap;
+                    p1.y -= (dy / dist) * overlap;
+                    p2.x += (dx / dist) * overlap;
+                    p2.y += (dy / dist) * overlap;
+                }
+            }
+        }
+        positions.forEach(p => {
+            let clamped = clampPositionToContainer(p.x, p.y, p.radius);
+            p.x = clamped.x; p.y = clamped.y;
+            p.x += (centerX - p.x) * 0.002;
+            p.y += (centerY - p.y) * 0.002;
+        });
+        if (!hasCollision) break;
+    }
+
+    originalLayout.clear();
+    positions.forEach(p => {
+        originalLayout.set(p.dot, { x: p.x, y: p.y, width: getBaseSize(p.dot) });
+        p.dot.dataset.baseWidth = getBaseSize(p.dot);
+    });
+    restoreOriginalLayout();
 }
 
-.bento-value {
-    font-weight: 700;
-    font-size: clamp(0.9em, 1.8vw, 1.1em);
+function restoreOriginalLayout() {
+    dots.forEach(dot => {
+        const original = originalLayout.get(dot);
+        if (!original) return;
+        dot.classList.remove('state-name', 'state-message');
+        
+        const innerBox = dot.querySelector('.dot-inner-box');
+        if (innerBox) {
+            const sender = dot.querySelector('.dot-sender');
+            const content = dot.querySelector('.dot-content');
+            if (sender) dot.appendChild(sender);
+            if (content) dot.appendChild(content);
+            innerBox.remove();
+        }
+
+        dot.style.setProperty('--dot-size', `${original.width}px`);
+        dot.style.width = `${original.width}px`;
+        dot.style.height = `${original.width}px`;
+        dot.style.left = `${original.x}px`;
+        dot.style.top = `${original.y}px`;
+
+        const content = dot.querySelector('.dot-content');
+        if (content && dot.dataset.fullText) content.textContent = dot.dataset.fullText;
+    });
+    activeDot = null;
+    interactionMode = 'none';
 }
 
-.stat-label-bottom {
-    font-size: 0.72em;
-    font-weight: 600;
-    margin-top: 3px;
-    line-height: 1.2;
+function calculateCompactDiameter(dot, isMessageState = false) {
+    const sender = dot.querySelector('.dot-sender');
+    const content = dot.querySelector('.dot-content');
+    if (!sender) return getBaseSize(dot);
+
+    let innerBox = dot.querySelector('.dot-inner-box');
+    if (!innerBox) {
+        innerBox = document.createElement('div');
+        innerBox.className = 'dot-inner-box';
+        innerBox.appendChild(sender);
+        if (isMessageState && content) innerBox.appendChild(content);
+        dot.appendChild(innerBox);
+    }
+
+    const prevSize = dot.style.getPropertyValue('--dot-size');
+    dot.style.setProperty('--dot-size', 'auto');
+    dot.style.width = 'auto';
+    dot.style.height = 'auto';
+    
+    let minW = 60, maxW = isMessageState ? 420 : 280, bestSide = maxW;
+    while (minW <= maxW) {
+        let mid = Math.floor((minW + maxW) / 2);
+        innerBox.style.width = `${mid}px`;
+        innerBox.style.height = `${mid}px`;
+        let totalH = sender.getBoundingClientRect().height + ((isMessageState && content) ? content.getBoundingClientRect().height + 14 : 0);
+        if (totalH <= mid) { bestSide = mid; maxW = mid - 1; } else { minW = mid + 1; }
+    }
+    
+    innerBox.style.width = ''; innerBox.style.height = '';
+    dot.style.setProperty('--dot-size', prevSize);
+    dot.style.width = prevSize; dot.style.height = prevSize;
+    
+    let diameter = Math.ceil(bestSide * (isMessageState ? 1.35 : 1.6));
+    return Math.max(isMessageState ? 110 : 90, Math.min(isMessageState ? 380 : 260, diameter));
 }
 
-/* Couleurs de cartes - Rose */
-.card-rose-light  { background-color: var(--rose-c1); color: var(--rose-text); box-shadow: 0 8px 20px rgba(74, 38, 56, 0.08); } 
-.card-rose-medium { background-color: var(--rose-c2); color: #FFF5F6; box-shadow: 0 8px 20px rgba(74, 38, 56, 0.08); } 
-.card-rose-dark   { background-color: var(--rose-c3); color: #FFF8F5; box-shadow: 0 8px 20px rgba(74, 38, 56, 0.08); } 
-.card-rose-deep   { background-color: var(--rose-c4); color: #3D2230; box-shadow: 0 8px 20px rgba(74, 38, 56, 0.08); } 
+function computeStableLayout(activeDot, activeSize) {
+    const original = originalLayout.get(activeDot);
+    if (!original) return { activePos: { x: original.x, y: original.y, radius: activeSize / 2 }, othersPos: [] };
+    
+    const activeRadius = activeSize / 2;
+    const clampedActive = clampPositionToContainer(original.x, original.y, activeRadius);
+    
+    const others = getVisibleDots().filter(d => d !== activeDot);
+    const othersPos = others.map(dot => {
+        const pos = originalLayout.get(dot);
+        let size = (interactionMode === 'message') ? Math.max(16, pos.width * 0.65) : pos.width;
+        let dx = pos.x - clampedActive.x, dy = pos.y - clampedActive.y;
+        let dist = Math.hypot(dx, dy) || 1;
+        let minD = activeRadius + (size / 2) + (interactionMode === 'message' ? 14 : 10);
+        let x = pos.x, y = pos.y;
+        if (dist < minD) {
+            x = clampedActive.x + (dx / dist) * minD;
+            y = clampedActive.y + (dy / dist) * minD;
+        }
+        let clamped = clampPositionToContainer(x, y, size / 2);
+        return { dot, x: clamped.x, y: clamped.y, radius: size / 2, size };
+    });
 
-#rahimanniv .bento-row:nth-child(1) .bento-card:nth-child(1) { flex: 1.1; padding: 12px 14px; align-items: flex-start; text-align: left; }
-#rahimanniv .bento-row:nth-child(1) .bento-card:nth-child(2) { flex: 1.5; padding: 10px; }
-#rahimanniv .bento-row:nth-child(2) .bento-card:nth-child(1) { flex: 0.9; padding: 10px; }
-#rahimanniv .bento-row:nth-child(2) .bento-card:nth-child(2) { flex: 1; padding: 10px; }
-#rahimanniv .bento-row:nth-child(2) .bento-card:nth-child(3) { flex: 0.8; padding: 10px; }
-#rahimanniv .bento-row:nth-child(3) .bento-card:nth-child(1) { flex: 1.3; padding: 10px; }
-#rahimanniv .bento-row:nth-child(3) .bento-card:nth-child(2) { flex: 1.1; padding: 10px; }
+    for (let i = 0; i < 40; i++) {
+        let hasCollision = false;
+        for (let a = 0; a < othersPos.length; a++) {
+            for (let b = a + 1; b < othersPos.length; b++) {
+                let p1 = othersPos[a], p2 = othersPos[b];
+                let dx = p2.x - p1.x, dy = p2.y - p1.y;
+                let dist = Math.hypot(dx, dy) || 1;
+                let req = p1.radius + p2.radius + (interactionMode === 'message' ? 12 : 8);
+                if (dist < req) {
+                    hasCollision = true;
+                    let overlap = (req - dist) * 0.5;
+                    p1.x -= (dx / dist) * overlap;
+                    p1.y -= (dy / dist) * overlap;
+                    p2.x += (dx / dist) * overlap;
+                    p2.y += (dy / dist) * overlap;
+                }
+            }
+        }
+        othersPos.forEach(p => {
+            let clamped = clampPositionToContainer(p.x, p.y, p.radius);
+            p.x = clamped.x; p.y = clamped.y;
+            let dx = p.x - clampedActive.x, dy = p.y - clampedActive.y;
+            let dist = Math.hypot(dx, dy) || 1;
+            let minD = activeRadius + p.radius + (interactionMode === 'message' ? 14 : 10);
+            if (dist < minD) {
+                p.x = clampedActive.x + (dx / dist) * minD;
+                p.y = clampedActive.y + (dy / dist) * minD;
+                let reClamp = clampPositionToContainer(p.x, p.y, p.radius);
+                p.x = reClamp.x; p.y = reClamp.y;
+            }
+        });
+        if (!hasCollision) break;
+    }
 
-/* Dictionnaire (Première carte Page 1) */
-.dictionary-content {
-    text-align: left;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    return {
+        activePos: { x: clampedActive.x, y: clampedActive.y, radius: activeRadius },
+        othersPos
+    };
 }
 
-.dict-word-row {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    margin-bottom: 2px;
+function applyTemporaryLayout(activeDot, activeSize) {
+    const layout = computeStableLayout(activeDot, activeSize);
+    
+    activeDot.style.left = `${layout.activePos.x}px`;
+    activeDot.style.top = `${layout.activePos.y}px`;
+
+    layout.othersPos.forEach(p => {
+        if (interactionMode === 'message') {
+            p.dot.style.setProperty('--dot-size', `${p.size}px`);
+            p.dot.style.width = `${p.size}px`; 
+            p.dot.style.height = `${p.size}px`;
+        }
+        p.dot.style.left = `${p.x}px`;
+        p.dot.style.top = `${p.y}px`;
+    });
 }
 
-.dict-word {
-    font-family: var(--font-title);
-    font-weight: 800;
-    font-size: clamp(1em, 2vw, 1.3em);
-    color: var(--rose-text);
-    letter-spacing: -0.02em;
+function showName(dot) {
+    if (!dot.querySelector('.dot-sender')) return;
+    if (activeDot && activeDot !== dot) restoreOriginalLayout();
+    activeDot = dot;
+    interactionMode = 'name';
+    dot.classList.remove('state-message');
+    dot.classList.add('state-name');
+
+    const sender = dot.querySelector('.dot-sender');
+    if (!dot.querySelector('.dot-inner-box')) {
+        const innerBox = document.createElement('div');
+        innerBox.className = 'dot-inner-box';
+        innerBox.appendChild(sender);
+        dot.appendChild(innerBox);
+    }
+
+    const size = calculateCompactDiameter(dot, false);
+    applyTemporaryLayout(dot, size);
+    
+    dot.style.setProperty('--dot-size', `${size}px`);
+    dot.style.width = `${size}px`; 
+    dot.style.height = `${size}px`;
 }
 
-.dict-phonetic {
-    font-family: var(--font-sans);
-    font-style: italic;
-    font-weight: 400;
-    font-size: 0.75em;
-    color: var(--rose-sub);
+function showMessage(dot) {
+    if (!dot.querySelector('.dot-sender')) return;
+    activeDot = dot;
+    interactionMode = 'message';
+    const content = dot.querySelector('.dot-content');
+    if (!content) return;
+
+    content.textContent = dot.dataset.fullText || content.textContent.trim();
+    dot.classList.remove('state-name');
+    dot.classList.add('state-message');
+
+    const innerBox = dot.querySelector('.dot-inner-box') || document.createElement('div');
+    if (!innerBox.classList.contains('dot-inner-box')) {
+        innerBox.className = 'dot-inner-box';
+        innerBox.appendChild(dot.querySelector('.dot-sender'));
+        dot.appendChild(innerBox);
+    }
+    if (!innerBox.contains(content)) innerBox.appendChild(content);
+
+    const size = calculateCompactDiameter(dot, true);
+    applyTemporaryLayout(dot, size);
+    
+    dot.style.setProperty('--dot-size', `${size}px`);
+    dot.style.width = `${size}px`; 
+    dot.style.height = `${size}px`;
 }
 
-.dict-pos {
-    font-family: var(--font-sans);
-    font-style: italic;
-    font-weight: 600;
-    font-size: 0.75em;
-    color: var(--rose-title);
-    margin-bottom: 4px;
+dots.forEach(dot => {
+    dot.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (!dot.querySelector('.dot-sender')) return;
+        if (!isMobile) {
+            if (interactionMode === 'message') { restoreOriginalLayout(); return; }
+            showMessage(dot);
+            return;
+        }
+        if (activeDot === dot) {
+            if (interactionMode === 'name') { showMessage(dot); return; }
+            else { restoreOriginalLayout(); return; }
+        }
+        showName(dot);
+    });
+
+    dot.addEventListener('mouseenter', function() {
+        if (isMobile || interactionMode === 'message' || !dot.querySelector('.dot-sender')) return;
+        showName(dot);
+    });
+
+    dot.addEventListener('mouseleave', function() {
+        if (isMobile || interactionMode === 'message') return;
+        restoreOriginalLayout();
+    });
+});
+
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.search-container')) {
+        const dropdown = document.getElementById('custom-dropdown');
+        const box = document.getElementById('search-container-box');
+        if (dropdown) dropdown.classList.remove('show');
+        if (box) box.classList.remove('dropdown-open');
+    }
+    if (!e.target.closest('.dot-card') && !e.target.closest('.controls-container') && interactionMode !== 'none') {
+        restoreOriginalLayout();
+    }
+});
+
+function applyFilters() {
+    const searchBar = document.getElementById('search-bar');
+    if (!searchBar) return;
+    const rawQuery = searchBar.value;
+    if (rawQuery.trim() === '') document.querySelectorAll('#custom-dropdown input[type="checkbox"]').forEach(cb => cb.checked = false);
+    const terms = rawQuery.split(',').map(t => t.trim().toLowerCase()).filter(t => t.length > 0);
+
+    restoreOriginalLayout();
+    dots.forEach(dot => {
+        if (!dot.querySelector('.dot-sender')) return;
+        const name = (dot.getAttribute('data-name') || '').toLowerCase();
+        const rawCat = (dot.getAttribute('data-cat') || '').toLowerCase();
+        const gender = (dot.getAttribute('data-gender') || 'male').toLowerCase();
+        const house = (dot.getAttribute('data-house') || '').toLowerCase();
+        let dynamicCat = rawCat.includes('quidditch') ? (gender === 'female' ? 'joueuse de quidditch' : 'joueur de quidditch') : rawCat;
+        let text = (dot.dataset.fullText || '').toLowerCase();
+
+        let matches = terms.length === 0 || terms.every(term => {
+            let st = (term.includes('joueur') || term.includes('joueuse')) ? 'quidditch' : term;
+            return name.includes(st) || dynamicCat.includes(st) || house.includes(st) || text.includes(st);
+        });
+        dot.classList.toggle('is-hidden', !matches);
+    });
+    setTimeout(calculateOriginalLayout, 30);
 }
 
-.dict-definition {
-    font-family: var(--font-sans);
-    font-size: clamp(0.7em, 1.3vw, 0.8em);
-    line-height: 1.35;
-    color: var(--rose-text);
-    font-weight: 400;
+function handleSearchInput(q) {
+    const checkboxes = document.querySelectorAll('#custom-dropdown input[type="checkbox"]');
+    if (q.trim() === '') checkboxes.forEach(cb => cb.checked = false);
+    applyFilters();
 }
 
-/* Couleurs de cartes - Vert */
-.card-green-light  { background-color: var(--green-c1); color: var(--green-text); box-shadow: 0 8px 20px rgba(38, 61, 53, 0.08); } 
-.card-green-medium { background-color: var(--green-c2); color: var(--green-text); box-shadow: 0 8px 20px rgba(38, 61, 53, 0.08); } 
-.card-green-dark   { background-color: var(--green-c3); color: #F7F4E9; box-shadow: 0 8px 20px rgba(38, 61, 53, 0.08); } 
-.card-green-deep   { background-color: var(--green-c4); color: #F7F4E9; box-shadow: 0 8px 20px rgba(38, 61, 53, 0.08); } 
-
-#rahimaths .bento-row:nth-child(1) .bento-card:nth-child(1) { flex: 0.8; padding: 14px; }
-#rahimaths .bento-row:nth-child(1) .bento-card:nth-child(2) { flex: 1.6; padding: 10px; }
-#rahimaths .bento-row:nth-child(2) .bento-card:nth-child(1) { flex: 1; padding: 12px; }
-#rahimaths .bento-row:nth-child(3) .bento-card:nth-child(1) { flex: 1.5; padding: 10px; }
-#rahimaths .bento-row:nth-child(3) .bento-card:nth-child(2) { flex: 0.9; padding: 14px; }
-#rahimaths .bento-row:nth-child(4) .bento-card:nth-child(1) { flex: 1; padding: 10px; }
-#rahimaths .bento-row:nth-child(4) .bento-card:nth-child(2) { flex: 1.2; padding: 10px; }
-
-/* Odomètre mécanique (Page 2) */
-.odometer {
-    font-family: var(--font-title);
-    font-weight: 800;
-    font-size: clamp(1.1em, 2.3vw, 1.6em);
-    line-height: 1.1em;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    height: 1.1em;
+function handleCheckboxChange() {
+    const checked = Array.from(document.querySelectorAll('#custom-dropdown input[type="checkbox"]'))
+        .filter(cb => cb.checked).map(cb => cb.value === 'Joueur' ? 'Joueurs de Quidditch' : cb.value);
+    const searchBar = document.getElementById('search-bar');
+    if (searchBar) searchBar.value = checked.join(', ');
+    applyFilters();
 }
 
-.digit-col { display: inline-block; height: 1.1em; overflow: hidden; position: relative; }
-.digit-strip { display: flex; flex-direction: column; will-change: transform; }
-.digit-strip span { display: block; height: 1.1em; line-height: 1.1em; text-align: center; }
-
-/* Couleurs de cartes - Violet */
-.card-purple-1 { background-color: var(--purple-c1); color: var(--purple-text); box-shadow: 0 8px 20px rgba(56, 38, 63, 0.06); } 
-.card-purple-2 { background-color: var(--purple-c2); color: var(--purple-text); box-shadow: 0 8px 20px rgba(56, 38, 63, 0.06); } 
-.card-purple-3 { background-color: var(--purple-c3); color: #FAF7FB; box-shadow: 0 8px 20px rgba(56, 38, 63, 0.08); } 
-.card-purple-4 { background-color: var(--purple-c4); color: var(--purple-text); box-shadow: 0 8px 20px rgba(56, 38, 63, 0.08); } 
-
-#rahimood .bento-row:nth-child(1) .bento-card:nth-child(1) { flex: 1.2; padding: 12px; }
-#rahimood .bento-row:nth-child(1) .bento-card:nth-child(2) { flex: 1; padding: 10px; }
-#rahimood .bento-row:nth-child(2) .bento-card:nth-child(1) { flex: 0.9; padding: 10px; }
-#rahimood .bento-row:nth-child(2) .bento-card:nth-child(2) { flex: 1.4; padding: 10px; }
-#rahimood .bento-row:nth-child(3) .bento-card:nth-child(1) { flex: 1.1; padding: 10px; }
-#rahimood .bento-row:nth-child(3) .bento-card:nth-child(2) { flex: 1; padding: 10px; }
-#rahimood .bento-row:nth-child(4) .bento-card:nth-child(1) { flex: 0.8; padding: 10px; }
-#rahimood .bento-row:nth-child(4) .bento-card:nth-child(2) { flex: 1.5; padding: 10px; }
-
-/* ==========================================================================
-   PAGE 3 : BARRE DE RECHERCHE & FILTRES
-   ========================================================================== */
-.controls-container { 
-    z-index: 20; 
-    width: 100%; 
-    max-width: 320px; 
-    flex-shrink: 0; 
-    margin: 0 auto; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
+function toggleDropdownMenu(e) {
+    e.stopPropagation();
+    const dropdown = document.getElementById('custom-dropdown');
+    const box = document.getElementById('search-container-box');
+    if (dropdown) dropdown.classList.toggle('show');
+    if (box) box.classList.toggle('dropdown-open');
 }
 
-.search-container {
-    width: 100%; 
-    position: relative; 
-    display: flex; 
-    align-items: center; 
-    background: #ffffff;
-    border: 2px solid rgba(128, 102, 83, 0.35); 
-    border-radius: 50px; 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03); 
-    transition: all 0.3s ease;
-}
+window.addEventListener('resize', () => {
+    clearTimeout(window.resizeTimer);
+    window.resizeTimer = setTimeout(() => { 
+        restoreOriginalLayout(); 
+        calculateOriginalLayout(); 
+        const activeBar = document.querySelector('.bottom-nav-bar');
+        if (activeBar) updateNavIndicator(activeBar.getAttribute('data-active')); 
+    }, 250);
+});
 
-.search-container:focus-within { 
-    border-color: var(--beige-title); 
-    box-shadow: 0 6px 20px rgba(128, 102, 83, 0.15); 
-}
+window.matchMedia('(hover: none)').addEventListener('change', e => { isMobile = e.matches; });
 
-.search-icon { 
-    position: absolute; 
-    left: 16px; 
-    width: 16px; 
-    height: 16px; 
-    pointer-events: none; 
-    fill: none; 
-    stroke: var(--beige-title); 
-    stroke-width: 2.2; 
-    stroke-linecap: round; 
-    stroke-linejoin: round; 
-}
-
-.search-input { 
-    width: 100%; 
-    padding: 8px 52px 8px 44px; 
-    border: none; 
-    border-radius: 50px; 
-    font-family: inherit; 
-    font-size: 0.9em; 
-    text-align: left; 
-    outline: none; 
-    background: transparent; 
-    color: var(--beige-text); 
-    -webkit-appearance: none; 
-}
-
-.search-input::placeholder { 
-    color: rgba(128, 102, 83, 0.6); 
-    text-align: left; 
-}
-
-.dropdown-toggle-btn { 
-    position: absolute; 
-    right: 0; 
-    top: 50%; 
-    transform: translateY(-50%); 
-    background: none; 
-    border: none; 
-    border-left: 1.5px solid rgba(128, 102, 83, 0.3); 
-    cursor: pointer; 
-    padding: 6px 12px; 
-    height: 22px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    outline: none; 
-}
-
-.dropdown-toggle-btn svg { 
-    width: 14px; 
-    height: 14px; 
-    stroke: var(--beige-title); 
-    stroke-width: 2.5; 
-    stroke-linecap: round; 
-    stroke-linejoin: round; 
-    fill: none; 
-    transition: transform 0.3s ease; 
-}
-
-.search-container.dropdown-open .dropdown-toggle-btn svg { 
-    transform: rotate(180deg); 
-}
-
-.custom-dropdown-menu {
-    position: absolute; 
-    top: calc(100% + 6px); 
-    left: 0; 
-    width: 100%; 
-    background: #ffffff;
-    border: 2px solid rgba(128, 102, 83, 0.35); 
-    border-radius: 16px; 
-    box-shadow: 0 8px 25px rgba(80, 53, 47, 0.12);
-    z-index: 100; 
-    display: none; 
-    flex-direction: column; 
-    overflow: hidden; 
-    animation: fadeInMenu 0.2s ease forwards;
-}
-
-.custom-dropdown-menu.show { 
-    display: flex; 
-}
-
-@keyframes fadeInMenu { 
-    from { opacity: 0; transform: translateY(-6px); } 
-    to { opacity: 1; transform: translateY(0); } 
-}
-
-.dropdown-item { 
-    padding: 8px 16px; 
-    text-align: left; 
-    font-size: 0.85em; 
-    color: var(--beige-text); 
-    background: transparent; 
-    border: none; 
-    cursor: pointer; 
-    transition: background 0.2s ease, color 0.2s ease; 
-    font-family: inherit; 
-    display: flex; 
-    align-items: center; 
-    gap: 10px; 
-}
-
-.dropdown-item input[type="checkbox"] { 
-    cursor: pointer; 
-    accent-color: var(--beige-title); 
-    width: 15px; 
-    height: 15px; 
-}
-
-.dropdown-item:hover { 
-    background: rgba(128, 102, 83, 0.1); 
-    color: var(--beige-title); 
-}
-
-/* ==========================================================================
-   PAGE 3 : CONSTELLATION FLUIDE & BULLES INTERACTIVES
-   ========================================================================== */
-.constellation-container {
-    position: relative; 
-    width: 100%; 
-    max-width: 950px; 
-    height: 100%; 
-    max-height: 400px;
-    margin: 0 auto; 
-    z-index: 5; 
-    padding: 10px; 
-    overflow: visible; 
-    flex-grow: 1;
-}
-
-.dot-card {
-    position: absolute; 
-    width: var(--dot-size, 30px); 
-    height: var(--dot-size, 30px);
-    aspect-ratio: 1 / 1 !important; 
-    min-width: var(--dot-size, 30px); 
-    min-height: var(--dot-size, 30px);
-    left: 0; 
-    top: 0; 
-    border-radius: 50%; 
-    padding: 0; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
-    background-color: var(--c); 
-    cursor: pointer; 
-    box-shadow: 0 4px 16px rgba(80, 53, 47, 0.08);
-    transform: translate(-50%, -50%); 
-    transform-origin: center center;
-    transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                top 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                width 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                height 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                background-color 0.4s ease,
-                box-shadow 0.4s ease;
-    z-index: 2; 
-    opacity: 1; 
-    touch-action: manipulation; 
-    overflow: hidden;
-    will-change: left, top, width, height;
-}
-
-.dot-card.is-hidden { 
-    opacity: 0 !important; 
-    pointer-events: none !important; 
-}
-
-.dot-sender, .dot-content { 
-    opacity: 0; 
-    display: none; 
-    transition: opacity 0.2s ease; 
-}
-
-.dot-card { 
-    --txt: #4B4038; 
-}
-
-/* État nom (Hover desktop / 1er tap mobile) */
-.dot-card.state-name {
-    background-color: var(--bg-msg) !important;
-    border: 2px solid var(--txt);
-    box-shadow: 0 8px 22px rgba(80, 53, 47, 0.15);
-    z-index: 30;
-}
-
-.dot-card.state-name .dot-inner-box {
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center; 
-    text-align: center; 
-    width: 100%; 
-    height: 100%; 
-    padding: 12px;
-}
-
-.dot-card.state-name .dot-sender {
-    width: 100%; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center;
-    opacity: 1; 
-    font-weight: 700; 
-    font-size: 0.75em; 
-    color: var(--txt); 
-    text-align: center; 
-    line-height: 1.25;
-}
-
-.name-group { 
-    display: inline-block; 
-    white-space: nowrap; 
-}
-
-.name-group-wrap { 
-    display: inline; 
-    white-space: normal; 
-    text-align: center; 
-}
-
-.dot-category {
-    font-weight: 500; 
-    font-style: italic; /* Remplacement des tirets par de l'italique */
-    font-size: 0.78em; 
-    opacity: 0.85; 
-    margin-top: 3px; 
-    white-space: normal;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    gap: 3px; 
-    width: 100%; 
-    text-align: center; 
-    color: var(--txt);
-}
-
-.dot-count { 
-    font-weight: 600; 
-    font-size: 0.72em; 
-    opacity: 0.75; 
-    margin-top: 2px; 
-    white-space: nowrap; 
-    color: var(--txt); 
-}
-
-/* État message (Click desktop / 2e tap mobile) */
-.dot-card.state-message {
-    background-color: var(--bg-msg) !important;
-    border: 2px solid var(--txt);
-    box-shadow: 0 14px 35px rgba(80, 53, 47, 0.2);
-    z-index: 100;
-}
-
-.dot-card.state-message .dot-inner-box {
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center; 
-    text-align: center; 
-    width: 100%; 
-    height: 100%; 
-    padding: 14px;
-}
-
-.dot-card.state-message .dot-sender {
-    width: 100%; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    opacity: 1; 
-    font-weight: 700; 
-    font-size: 0.72em;
-    margin-bottom: 4px; 
-    border-bottom: 1px solid rgba(75, 64, 56, 0.2); 
-    padding-bottom: 3px; 
-    text-align: center; 
-    color: var(--txt); 
-    line-height: 1.2; 
-    flex-shrink: 0; 
-    white-space: normal;
-}
-
-.dot-card.state-message .dot-content {
-    width: 100%; 
-    display: block; 
-    opacity: 1; 
-    text-align: center; 
-    font-size: 0.65em; 
-    line-height: 1.35; 
-    color: var(--txt); 
-    overflow-wrap: break-word; 
-    word-break: normal;
-}
-
-/* Accessibilité : Réduction des mouvements si demandé */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
+document.addEventListener('DOMContentLoaded', () => {
+    initOdometers();
+    const mathSec = document.getElementById('rahimaths');
+    if (mathSec) exploitsObserver.observe(mathSec);
+    updateNavIndicator('rahimanniv');
+    history.replaceState(null, null, ' ');
+    calculateOriginalLayout();
+});
