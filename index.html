@@ -30,7 +30,7 @@
             overflow-y: auto;
             overflow-x: hidden;
             overscroll-behavior-y: contain;
-            scroll-snap-type: y mandatory;
+            scroll-snap-type: y proximity;
             scroll-behavior: auto;
             -webkit-overflow-scrolling: touch;
         }
@@ -273,6 +273,22 @@
         
             .password-gate.open {
                 bottom: calc(65px + env(safe-area-inset-bottom, 0px));
+            }
+        }
+        
+        @media not all and (min-aspect-ratio: 1/1) {
+
+            /* Sur téléphone, une page peut dépasser la hauteur de l'écran */
+            .section {
+                height: auto !important;
+                min-height: 100dvh;
+                overflow: visible !important;
+                scroll-snap-stop: normal;
+            }
+        
+            /* Les pages trop longues peuvent être parcourues normalement */
+            .main-container {
+                scroll-snap-type: y proximity;
             }
         }
 
