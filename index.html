@@ -271,8 +271,8 @@
                 transform: translateX(104px);
             }
         
-            .password-gate {
-                bottom: 78px;
+            .password-gate.open {
+                bottom: calc(65px + env(safe-area-inset-bottom, 0px));
             }
         }
 
