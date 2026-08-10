@@ -975,20 +975,6 @@ passwordInput.addEventListener('input', async () => {
     }
 });
 
-const rahimood = document.getElementById('rahimood');
-const lockedNav = document.querySelector('.nav-locked');
-
-let page3Unlocked =
-    localStorage.getItem(PASSWORD_STORAGE_KEY) === 'true';
-
-passwordInput.addEventListener('input', async () => {
-    const hash = await hashPassword(passwordInput.value);
-
-    if (hash === PASSWORD_HASH) {
-        unlockPage3();
-    }
-});
-
 function unlockPage3() {
     if (page3Unlocked) return;
 
@@ -1268,11 +1254,6 @@ window.addEventListener('resize', () => {
         const currentIndexes = {};
         dots.forEach(dot => {
             const contentDiv = dot.querySelector('.dot-content');
-            if (contentDiv) {
-                if (!dot.classList.contains('image-message')) {
-                    content.textContent = dot.dataset.fullText || content.textContent.trim();
-                }
-            }
 
             const senderDiv = dot.querySelector('.dot-sender');
             if (!senderDiv) return;
@@ -1718,25 +1699,63 @@ if (!dot.classList.contains('image-message')) {
         }
 
         function showName(dot) {
-            if (!dot.querySelector('.dot-sender')) return;
-            if (activeDot && activeDot !== dot) restoreOriginalLayout();
-            activeDot = dot;
-            interactionMode = 'name';
-            dot.classList.remove('state-message');
-            dot.classList.add('state-name');
+    if (!dot.querySelector('.dot-sender')) return;
+    if (activeDot && activeDot !== dot) restoreOriginalLayout();
 
-            const sender = dot.querySelector('.dot-sender');
-            if (!dot.querySelector('.dot-inner-box')) {
-                const innerBox = document.createElement('div');
-                innerBox.className = 'dot-inner-box';
-                innerBox.appendChild(sender);
-                dot.appendChild(innerBox);
-            }
+    activeDot = dot;
+    interactionMode = 'name';
 
-            const image = dot.querySelector('.dot-content img');
+    dot.classList.remove('state-message');
+    dot.classList.add('state-name');
 
-if (image && !image.complete) {
-    image.onload = () => {
+    const sender = dot.querySelector('.dot-sender');
+
+    if (!dot.querySelector('.dot-inner-box')) {
+        const innerBox = document.createElement('div');
+        innerBox.className = 'dot-inner-box';
+        innerBox.appendChild(sender);
+        dot.appendChild(innerBox);
+    }
+
+    const size = calculateCompactDiameter(dot, false);
+    applyTemporaryLayout(dot, size);
+
+    dot.style.setProperty('--dot-size', `${size}px`);
+    dot.style.width = `${size}px`;
+    dot.style.height = `${size}px`;
+}
+
+        function showMessage(dot) {
+    if (!dot.querySelector('.dot-sender')) return;
+
+    activeDot = dot;
+    interactionMode = 'message';
+
+    const content = dot.querySelector('.dot-content');
+    if (!content) return;
+
+    if (!dot.classList.contains('image-message')) {
+        content.textContent = dot.dataset.fullText || content.textContent.trim();
+    }
+
+    dot.classList.remove('state-name');
+    dot.classList.add('state-message');
+
+    const innerBox = dot.querySelector('.dot-inner-box') || document.createElement('div');
+
+    if (!innerBox.classList.contains('dot-inner-box')) {
+        innerBox.className = 'dot-inner-box';
+        innerBox.appendChild(dot.querySelector('.dot-sender'));
+        dot.appendChild(innerBox);
+    }
+
+    if (!innerBox.contains(content)) {
+        innerBox.appendChild(content);
+    }
+
+    const image = dot.querySelector('.dot-content img');
+
+    const applySize = () => {
         const size = calculateCompactDiameter(dot, true);
         applyTemporaryLayout(dot, size);
 
@@ -1744,42 +1763,13 @@ if (image && !image.complete) {
         dot.style.width = `${size}px`;
         dot.style.height = `${size}px`;
     };
-} else {
-    const size = calculateCompactDiameter(dot, true);
-    applyTemporaryLayout(dot, size);
 
-    dot.style.setProperty('--dot-size', `${size}px`);
-    dot.style.width = `${size}px`;
-    dot.style.height = `${size}px`;
+    if (image && !image.complete) {
+        image.onload = applySize;
+    } else {
+        applySize();
+    }
 }
-        }
-
-        function showMessage(dot) {
-            if (!dot.querySelector('.dot-sender')) return;
-            activeDot = dot;
-            interactionMode = 'message';
-            const content = dot.querySelector('.dot-content');
-            if (!content) return;
-
-            content.textContent = dot.dataset.fullText || content.textContent.trim();
-            dot.classList.remove('state-name');
-            dot.classList.add('state-message');
-
-            const innerBox = dot.querySelector('.dot-inner-box') || document.createElement('div');
-            if (!innerBox.classList.contains('dot-inner-box')) {
-                innerBox.className = 'dot-inner-box';
-                innerBox.appendChild(dot.querySelector('.dot-sender'));
-                dot.appendChild(innerBox);
-            }
-            if (!innerBox.contains(content)) innerBox.appendChild(content);
-
-            const size = calculateCompactDiameter(dot, true);
-            applyTemporaryLayout(dot, size);
-            
-            dot.style.setProperty('--dot-size', `${size}px`);
-            dot.style.width = `${size}px`; 
-            dot.style.height = `${size}px`;
-        }
 
         dots.forEach(dot => {
             dot.addEventListener('click', function(e) {
