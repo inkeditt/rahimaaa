@@ -975,6 +975,20 @@ passwordInput.addEventListener('input', async () => {
     }
 });
 
+const rahimood = document.getElementById('rahimood');
+const lockedNav = document.querySelector('.nav-locked');
+
+let page3Unlocked =
+    localStorage.getItem(PASSWORD_STORAGE_KEY) === 'true';
+
+passwordInput.addEventListener('input', async () => {
+    const hash = await hashPassword(passwordInput.value);
+
+    if (hash === PASSWORD_HASH) {
+        unlockPage3();
+    }
+});
+
 function unlockPage3() {
     if (page3Unlocked) return;
 
