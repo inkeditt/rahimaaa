@@ -896,7 +896,7 @@
                     <div class="dot-content">J'espère que tu resteras encore très longtemps car j'en ai pas fini avec toi. Merci d'être cette personne géniale, sincère, intègre, drôle et audacieuse que tu es. C'est toujours un énorme plaisir de te croiser, tout comme c’est un plaisir d’écrire avec toi. Reste là encore longtemps !</div>
                 </div>
                 <div class="dot-card image-message"
-     data-name="Sulien Willow"
+     data-name="Sulien Willows"
      data-cat="Professeur"
      data-gender="male"
      data-image="IMG_6188.jpeg"
@@ -957,14 +957,6 @@ async function hashPassword(password) {
         .join('');
 }
 
-passwordInput.addEventListener('input', async () => {
-    const hash = await hashPassword(passwordInput.value);
-
-    if (hash === PASSWORD_HASH) {
-        unlockPage3();
-    }
-});
-
 const passwordGate = document.getElementById('password-gate');
 const passwordLock = document.getElementById('password-lock');
 const passwordInput = document.getElementById('password-input');
@@ -974,6 +966,14 @@ const lockedNav = document.querySelector('.nav-locked');
 
 let page3Unlocked =
     localStorage.getItem(PASSWORD_STORAGE_KEY) === 'true';
+
+passwordInput.addEventListener('input', async () => {
+    const hash = await hashPassword(passwordInput.value);
+
+    if (hash === PASSWORD_HASH) {
+        unlockPage3();
+    }
+});
 
 function unlockPage3() {
     if (page3Unlocked) return;
@@ -1028,12 +1028,6 @@ document.addEventListener('click', (event) => {
     ) {
         passwordGate.classList.remove('open');
         passwordInput.blur();
-    }
-});
-
-passwordInput.addEventListener('input', () => {
-    if (passwordInput.value === PASSWORD) {
-        unlockPage3();
     }
 });
 
@@ -1261,7 +1255,9 @@ window.addEventListener('resize', () => {
         dots.forEach(dot => {
             const contentDiv = dot.querySelector('.dot-content');
             if (contentDiv) {
-                dot.dataset.fullText = contentDiv.textContent.trim();
+                if (!dot.classList.contains('image-message')) {
+                    content.textContent = dot.dataset.fullText || content.textContent.trim();
+                }
             }
 
             const senderDiv = dot.querySelector('.dot-sender');
@@ -1417,7 +1413,9 @@ if (sender) {
 }
 
 if (content && dot.dataset.fullText) {
-    content.textContent = dot.dataset.fullText;
+if (!dot.classList.contains('image-message')) {
+    content.textContent = dot.dataset.fullText || content.textContent.trim();
+}
 }
             });
             activeDot = null;
@@ -1721,12 +1719,25 @@ if (content && dot.dataset.fullText) {
                 dot.appendChild(innerBox);
             }
 
-            const size = calculateCompactDiameter(dot, false);
-            applyTemporaryLayout(dot, size);
-            
-            dot.style.setProperty('--dot-size', `${size}px`);
-            dot.style.width = `${size}px`; 
-            dot.style.height = `${size}px`;
+            const image = dot.querySelector('.dot-content img');
+
+if (image && !image.complete) {
+    image.onload = () => {
+        const size = calculateCompactDiameter(dot, true);
+        applyTemporaryLayout(dot, size);
+
+        dot.style.setProperty('--dot-size', `${size}px`);
+        dot.style.width = `${size}px`;
+        dot.style.height = `${size}px`;
+    };
+} else {
+    const size = calculateCompactDiameter(dot, true);
+    applyTemporaryLayout(dot, size);
+
+    dot.style.setProperty('--dot-size', `${size}px`);
+    dot.style.width = `${size}px`;
+    dot.style.height = `${size}px`;
+}
         }
 
         function showMessage(dot) {
