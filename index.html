@@ -913,8 +913,25 @@
 const pages = ['rahimanniv', 'rahimessages'];
 const mainContainer = document.getElementById('main-container');
 
-const PASSWORD = 'EsquieMo';
+const PASSWORD_HASH = '33e65b956318aa3fd8e5fee18e6d0a1024223d0c63c298461af1e5f180902471';;
 const PASSWORD_STORAGE_KEY = 'rahimood-unlocked';
+
+async function hashPassword(password) {
+    const data = new TextEncoder().encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+
+    return Array.from(new Uint8Array(hashBuffer))
+        .map(byte => byte.toString(16).padStart(2, '0'))
+        .join('');
+}
+
+passwordInput.addEventListener('input', async () => {
+    const hash = await hashPassword(passwordInput.value);
+
+    if (hash === PASSWORD_HASH) {
+        unlockPage3();
+    }
+});
 
 const passwordGate = document.getElementById('password-gate');
 const passwordLock = document.getElementById('password-lock');
