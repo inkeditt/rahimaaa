@@ -22,7 +22,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Conteneur principal qui gère le snap propre */
+        /* principal */
         .main-container {
             width: 100vw;
             height: 100vh;
@@ -83,7 +83,7 @@
             opacity: 0.85;
         }
 
-        /* --- CONFIGURATION DES PAGES --- */
+        /* --- pages --- */
         #rahimanniv { 
             background-color: #FFF5F6; 
             color: #4A2638; 
@@ -108,20 +108,6 @@
 
         #rahimessages .section-subtitle {
             color: #5E4C3D;
-        }
-
-        #rahimaaa { 
-            background-color: #F7F2F9; 
-            color: #38263F; 
-            display: none;
-        }
-
-        #rahimaaa .section-title {
-            color: #705477;
-        }
-
-        #rahimaaa .section-subtitle {
-            color: #523D57;
         }
 
         /* def */
@@ -266,19 +252,11 @@
             .bottom-nav-bar[data-active="rahimessages"] .nav-indicator {
                 transform: translateX(52px);
             }
-        
-            .bottom-nav-bar[data-active="rahimaaa"] .nav-indicator {
-                transform: translateX(104px);
-            }
-        
-            .password-gate.open {
-                bottom: calc(65px + env(safe-area-inset-bottom, 0px));
-            }
         }
         
         @media not all and (min-aspect-ratio: 1/1) {
 
-            /* Sur téléphone, une page peut dépasser la hauteur de l'écran */
+            /* phone */
             .section {
                 height: auto !important;
                 min-height: 100dvh;
@@ -286,7 +264,7 @@
                 scroll-snap-stop: normal;
             }
         
-            /* Les pages trop longues peuvent être parcourues normalement */
+            /* too long pages */
             .main-container {
                 scroll-snap-type: y proximity;
             }
@@ -298,10 +276,7 @@
         .bottom-nav-bar[data-active="rahimessages"] .nav-indicator { background-color: rgba(197, 160, 135, 0.4); }
         .bottom-nav-bar[data-active="rahimessages"] .nav-icon-bubble svg { stroke: #4B4038; }
 
-        .bottom-nav-bar[data-active="rahimaaa"] .nav-indicator { background-color: rgba(197, 168, 204, 0.4); }
-        .bottom-nav-bar[data-active="rahimaaa"] .nav-icon-bubble svg { stroke: #38263F; }
-
-        /* --- BENTO MIXÉ ET PLEINE LARGEUR --- */
+        /* --- bento --- */
         .bento-container {
             display: flex;
             flex-direction: column;
@@ -362,7 +337,7 @@
         .digit-strip { display: flex; flex-direction: column; will-change: transform; }
         .digit-strip span { display: block; height: 1.1em; line-height: 1.1em; text-align: center; }
 
-        /* --- BARRE DE RECHERCHE --- */
+        /* --- research --- */
         .controls-container { 
             z-index: 20; 
             width: 100%; 
@@ -395,7 +370,7 @@
         .dropdown-item input[type="checkbox"] { cursor: pointer; accent-color: #B86F5D; width: 15px; height: 15px; }
         .dropdown-item:hover { background: rgba(184, 111, 93, 0.1); color: #8C4736; }
 
-        /* --- CONSTELLATION FLUIDE --- */
+        /* --- constellation --- */
         .constellation-container {
             position: relative;
             width: 100%;
@@ -412,8 +387,6 @@
             touch-action: none;
         }
 
-        /* La page 2 utilise tout l'espace restant : l'amas est ainsi centré
-           entre le sous-titre/les contrôles et le bas de la fenêtre. */
         #rahimessages .constellation-container {
             display: block;
         }
@@ -454,7 +427,7 @@
         .dot-sender, .dot-content { opacity: 0; display: none; transition: opacity 0.2s ease; }
         .dot-card { --txt: #4B4038; }
 
-        /* --- ÉTAT NOM --- */
+        /* --- name --- */
         .dot-card.state-name {
             background-color: var(--bg-msg) !important;
             border: 2px solid var(--txt);
@@ -474,100 +447,6 @@
     max-height: 100%;
     box-sizing: border-box;
     padding: 18px;
-}
-
-.nav-locked {
-    display: none;
-}
-
-.password-gate {
-    position: fixed;
-    z-index: 1000;
-    right: 22px;
-    bottom: 20px;
-
-    width: 42px;
-    height: 42px;
-
-    display: flex;
-    align-items: center;
-
-    padding: 0;
-
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.92);
-    box-shadow: 0 4px 18px rgba(75, 64, 56, 0.12);
-
-    overflow: hidden;
-
-    transition:
-        width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-        box-shadow 0.25s ease;
-}
-
-.password-gate.open {
-    width: 190px;
-}
-
-.password-lock {
-    flex: 0 0 42px;
-
-    width: 42px;
-    height: 42px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 0;
-    border: none;
-    background: transparent;
-
-    cursor: pointer;
-    color: #806653;
-}
-
-.password-lock svg {
-    width: 17px;
-    height: 17px;
-
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.7;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-
-    transition:
-        opacity 0.2s ease,
-        transform 0.2s ease;
-}
-
-.password-gate.open .password-lock {
-    display: none;
-}
-
-.password-gate input {
-    flex: 1;
-
-    width: 100%;
-    min-width: 0;
-
-    border: none;
-    outline: none;
-    background: transparent;
-
-    padding: 0 15px;
-
-    font-family: inherit;
-    font-size: 0.75em;
-    color: #4B4038;
-
-    text-align: left;
-}
-
-.password-gate input::placeholder {
-    color: #8B8179;
-    opacity: 1;
 }
 
 .dot-card.state-name .dot-sender {
@@ -616,7 +495,7 @@
 }
         .dot-count { font-weight: 600; font-size: 0.75em; opacity: 0.75; margin-top: 2px; white-space: nowrap; color: var(--txt); }
 
-        /* --- ÉTAT MESSAGE --- */
+        /* --- message --- */
         .dot-card.state-message {
             background-color: var(--bg-msg) !important;
             border: 2px solid var(--txt);
@@ -695,38 +574,16 @@
     </style>
 </head>
 <body>
-    <div class="password-gate" id="password-gate">
-        <button class="password-lock" id="password-lock" type="button" aria-label="Entrer le mot de passe">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-                <rect x="5" y="10" width="14" height="11" rx="2"></rect>
-                <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
-            </svg>
-        </button>
-    
-        <input
-            type="text"
-            id="password-input"
-            placeholder="Mot de passe..."
-            autocomplete="off"
-            autocapitalize="off"
-            autocorrect="off"
-            spellcheck="false"
-            aria-label="Mot de passe"
-        >
-    </div>
-
-    <!-- BARRE DE NAVIGATION COMMUNE & UNIQUE (FIXE) -->
+    <!-- navigation bar -->
     <div class="bottom-nav-bar" id="bottom-nav-bar" data-active="rahimanniv">
         <div class="nav-indicator" id="nav-indicator"></div>
         <a href="#rahimanniv" class="nav-icon-bubble" aria-label="Gâteau" data-target="rahimanniv"><svg viewBox="0 0 24 24"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20"/><path d="M7 8v3"/><path d="M12 8v3"/><path d="M17 8v3"/><path d="M12 4v1"/></svg></a>
         <a href="#rahimessages" class="nav-icon-bubble" aria-label="Cœur" data-target="rahimessages"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></a>
-        <a href="#rahimaaa" class="nav-icon-bubble nav-locked" aria-label="Cadeau" data-target="rahimaaa"><svg viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></a>
     </div>
 
-    <!-- CONTENEUR PRINCIPAL DE DÉFILEMENT FLUIDE -->
     <div class="main-container" id="main-container">
 
-        <!-- PAGE 1 : RAHIMANNIV' -->
+        <!-- page 1 -->
         <div class="section" id="rahimanniv">
             <div class="section-title">RAHIMANNIV'</div>
             <div class="section-subtitle">« Un merveilleux anniversaire à la meilleure arbitre dont-le-prénom-commence-par-R-et-finit-par-A de tous les temps ! »</div>
@@ -765,7 +622,7 @@
                 </div>
                 
                 <div class="bento-row">
-                    <div class="bento-card card-rose-medium"><div class="odometer" data-start="753" data-end="783" data-step="3"></div><div class="stat-label-bottom bento-text-content">PR distribués<br><small>(dont 612 positifs et 171 négatifs)</small></div></div>
+                    <div class="bento-card card-rose-medium"><div class="odometer" data-start="701" data-end="789" data-step="4"></div><div class="stat-label-bottom bento-text-content">PR distribués<br><small>(dont 618 positifs et 171 négatifs)</small></div></div>
                     <div class="bento-card card-rose-dark"><div class="odometer" data-start="0" data-end="1" data-step="1"></div><div class="stat-label-bottom bento-text-content">sujet posté dans le mauvais forum</div></div>
                 </div>
                 
@@ -783,21 +640,10 @@
                         <div class="stat-label-bottom bento-text-content">de génie absolu</div>
                     </div>
                 </div>
-                
-                <div class="bento-row">
-                    <div class="bento-card card-rose-dark">
-                        <div style="font-weight: 700;">Attention</div>
-                        <div class="stat-label-bottom bento-text-content">Ne pas nourrir après minuit</div>
-                    </div>
-                    <div class="bento-card card-rose-light">
-                        <div style="font-weight: 700;">VIP</div>
-                        <div class="stat-label-bottom bento-text-content">Statut certifié adorable</div>
-                    </div>
-                </div>
             </div>
         </div>
 
-        <!-- PAGE 2 : RAHIMESSAGES -->
+        <!-- page 2 -->
         <div class="section" id="rahimessages">
             <div class="section-title">RAHIMESSAGES</div>
             <div class="section-subtitle">« Preuve ultime que tu es, en effet, une personne adorable et gentille. Même si tu ne voudras sûrement jamais l’admettre. (On t’aime.) »</div>
@@ -942,125 +788,14 @@
                 </div>
             </div>
         </div>
-
-        <!-- PAGE 3 : RAHIMAAA -->
-        <div class="section" id="rahimaaa">
-            <div class="section-title">RAHIMAAA</div>
-            <div class="section-subtitle">« Ooh, une page secrète supplémentaire ! En même temps comment voulez-vous dire tooout ce qu’il y a à dire sur une Rahima en seulement 3 pages ? »</div>
-            
-            <div class="bento-container">
-                <div class="bento-row">
-                    <div class="bento-card card-purple-1"><div style="font-weight: 700;">Reine</div><div class="stat-label-bottom bento-text-content">R</div></div>
-                    <div class="bento-card card-purple-2"><div style="font-weight: 700;">Absolue</div><div class="stat-label-bottom bento-text-content">A</div></div>
-                </div>
-                <div class="bento-row">
-                    <div class="bento-card card-purple-3"><div style="font-weight: 700;">Hilarante</div><div class="stat-label-bottom bento-text-content">H</div></div>
-                    <div class="bento-card card-purple-4"><div style="font-weight: 700;">Incroyable</div><div class="stat-label-bottom bento-text-content">I</div></div>
-                </div>
-                <div class="bento-row">
-                    <div class="bento-card card-purple-1"><div style="font-weight: 700;">Magnifique</div><div class="stat-label-bottom bento-text-content">M</div></div>
-                    <div class="bento-card card-purple-2"><div style="font-weight: 700;">Adorable</div><div class="stat-label-bottom bento-text-content">A</div></div>
-                </div>
-                <div class="bento-row">
-                    <div class="bento-card card-purple-3"><div style="font-weight: 700;">Artiste</div><div class="stat-label-bottom bento-text-content">A</div></div>
-                    <div class="bento-card card-purple-4"><div style="font-weight: 700;">Aussi vieille qu'elle le prétend</div><div class="stat-label-bottom bento-text-content">A</div></div>
-                </div>
-            </div>
-        </div>
-
     </div>
 
     <script>
-/* --- GESTION DE LA NAVIGATION --- */
+
+/* --- nav --- */
 
 const pages = ['rahimanniv', 'rahimessages'];
 const mainContainer = document.getElementById('main-container');
-
-const PASSWORD_HASH = '33e65b956318aa3fd8e5fee18e6d0a1024223d0c63c298461af1e5f180902471';;
-const PASSWORD_STORAGE_KEY = 'rahimaaa-unlocked';
-
-async function hashPassword(password) {
-    const data = new TextEncoder().encode(password);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-
-    return Array.from(new Uint8Array(hashBuffer))
-        .map(byte => byte.toString(16).padStart(2, '0'))
-        .join('');
-}
-
-const passwordGate = document.getElementById('password-gate');
-const passwordLock = document.getElementById('password-lock');
-const passwordInput = document.getElementById('password-input');
-
-const rahimaaa = document.getElementById('rahimaaa');
-const lockedNav = document.querySelector('.nav-locked');
-
-let page3Unlocked =
-    localStorage.getItem(PASSWORD_STORAGE_KEY) === 'true';
-
-passwordInput.addEventListener('input', async () => {
-    const hash = await hashPassword(passwordInput.value);
-
-    if (hash === PASSWORD_HASH) {
-        unlockPage3();
-    }
-});
-
-function unlockPage3() {
-    if (page3Unlocked) return;
-
-    page3Unlocked = true;
-
-    localStorage.setItem(PASSWORD_STORAGE_KEY, 'true');
-
-    rahimaaa.style.display = 'flex';
-
-    if (!pages.includes('rahimaaa')) {
-        pages.push('rahimaaa');
-    }
-
-    if (lockedNav) {
-        lockedNav.classList.remove('nav-locked');
-    }
-
-    if (passwordGate) {
-        passwordGate.remove();
-    }
-}
-
-if (page3Unlocked) {
-    rahimaaa.style.display = 'flex';
-
-    if (!pages.includes('rahimaaa')) {
-        pages.push('rahimaaa');
-    }
-
-    if (lockedNav) {
-        lockedNav.classList.remove('nav-locked');
-    }
-
-    if (passwordGate) {
-        passwordGate.remove();
-    }
-}
-
-passwordLock.addEventListener('click', () => {
-    passwordGate.classList.add('open');
-
-    requestAnimationFrame(() => {
-        passwordInput.focus();
-    });
-});
-
-document.addEventListener('click', (event) => {
-    if (
-        passwordGate.classList.contains('open') &&
-        !passwordGate.contains(event.target)
-    ) {
-        passwordGate.classList.remove('open');
-        passwordInput.blur();
-    }
-});
 
 let isNavigatingByClick = false;
 let navigationTimeout = null;
@@ -1068,12 +803,17 @@ let navigationTimeout = null;
 function updateNavIndicator(activeTarget) {
     const bar = document.getElementById('bottom-nav-bar');
     if (!bar) return;
+
     const targetLink = bar.querySelector(`[data-target="${activeTarget}"]`);
     if (!targetLink) return;
+
     bar.setAttribute('data-active', activeTarget);
+
     const indicator = bar.querySelector('.nav-indicator');
     if (!indicator) return;
+
     const isHorizontal = window.matchMedia('(min-aspect-ratio: 1/1)').matches;
+
     if (isHorizontal) {
         const topPos = targetLink.offsetTop;
         indicator.style.transform = `translateY(${topPos - 12}px)`;
@@ -1083,7 +823,7 @@ function updateNavIndicator(activeTarget) {
     }
 }
 
-/* --- DÉTECTION DE LA PAGE ACTUELLE SUR LE CONTENEUR --- */
+/* --- actual page --- */
 
 const sectionObserver = new IntersectionObserver((entries) => {
     if (isNavigatingByClick) return;
@@ -1110,7 +850,7 @@ document.querySelectorAll('.section').forEach(section => {
 });
 
 
-/* --- CLIC SUR UNE ICÔNE --- */
+/* --- clic --- */
 
 document.querySelectorAll('.nav-icon-bubble').forEach(link => {
     link.addEventListener('click', (e) => {
@@ -1138,7 +878,7 @@ document.querySelectorAll('.nav-icon-bubble').forEach(link => {
 });
 
 
-/* --- MISE À JOUR SI L'ÉCRAN CHANGE D'ORIENTATION --- */
+/* --- orientation --- */
 
 window.addEventListener('resize', () => {
     const bar = document.getElementById('bottom-nav-bar');
@@ -1149,7 +889,6 @@ window.addEventListener('resize', () => {
     }
 });
 
-        /* --- DÉFILEMENT PAGE PAR PAGE --- */
         let wheelLock = false;
         let wheelUnlockTimer = null;
 
@@ -1253,7 +992,7 @@ window.addEventListener('resize', () => {
             history.replaceState(null, null, ' ');
         });
 
-        /* --- PAGE 2 : CONSTELLATION FLUIDE --- */
+        /* --- page 2 --- */
         const container = document.getElementById('cloud-container');
         const dots = Array.from(container.querySelectorAll('.dot-card'));
         let originalLayout = new Map();
@@ -1468,13 +1207,6 @@ if (!dot.classList.contains('image-message')) {
         dot.appendChild(innerBox);
     }
 
-    /*
-     * On va tester différentes largeurs de texte.
-     * Pour chacune, on mesure la hauteur réellement nécessaire,
-     * puis on calcule le diamètre du cercle capable de contenir
-     * le rectangle texte + marges.
-     */
-
     const padding = 12;
 
     const previousWidth = dot.style.width;
@@ -1486,10 +1218,6 @@ if (!dot.classList.contains('image-message')) {
 
     const previousContentWidth = content ? content.style.width : '';
 
-    /*
-     * On enlève temporairement les contraintes du cercle.
-     * Le navigateur peut ainsi mesurer le texte librement.
-     */
     dot.style.width = 'auto';
     dot.style.height = 'auto';
     dot.style.setProperty('--dot-size', 'auto');
@@ -1497,13 +1225,6 @@ if (!dot.classList.contains('image-message')) {
     innerBox.style.height = 'auto';
     innerBox.style.boxSizing = 'border-box';
 
-    /*
-     * État NOM
-     *
-     * Le nom n'a pas besoin d'une recherche complexe :
-     * on cherche simplement la taille naturelle du contenu,
-     * avec une marge autour.
-     */
     if (!isMessageState) {
         innerBox.style.width = 'max-content';
 
@@ -1513,11 +1234,6 @@ if (!dot.classList.contains('image-message')) {
         const boxWidth = contentWidth + padding * 2;
         const boxHeight = contentHeight + padding * 2;
 
-        /*
-         * Pour qu'un rectangle tienne entièrement dans un cercle,
-         * le diamètre du cercle doit au minimum être égal à
-         * la diagonale de ce rectangle.
-         */
         let diameter = Math.ceil(
             Math.sqrt(boxWidth * boxWidth + boxHeight * boxHeight)
         );
@@ -1536,22 +1252,9 @@ if (!dot.classList.contains('image-message')) {
         return diameter;
     }
 
-    /*
-     * État MESSAGE
-     *
-     * Ici on cherche la largeur de texte qui donne
-     * la bulle la plus compacte.
-     */
-
     let bestDiameter = Infinity;
     let bestTextWidth = null;
 
-    /*
-     * On teste plusieurs largeurs.
-     * Les petites largeurs provoquent plus de retours à la ligne.
-     * Les grandes largeurs donnent moins de lignes mais une bulle
-     * plus large.
-     */
     const minTextWidth = 90;
     const maxTextWidth = 320;
     const step = 5;
@@ -1561,26 +1264,15 @@ if (!dot.classList.contains('image-message')) {
         textWidth <= maxTextWidth;
         textWidth += step
     ) {
-        /*
-         * Le texte reçoit une largeur précise.
-         * Cela permet au navigateur de décider lui-même
-         * où placer les retours à la ligne.
-         */
+
         if (content) {
             content.style.width = `${textWidth}px`;
         }
 
-        /*
-         * Le nom peut lui aussi revenir à la ligne,
-         * mais il doit rester à l'intérieur de cette largeur.
-         */
         sender.style.maxWidth = `${textWidth}px`;
 
         innerBox.style.width = `${textWidth + padding * 2}px`;
 
-        /*
-         * On force le navigateur à recalculer les dimensions.
-         */
         const senderWidth = sender.getBoundingClientRect().width;
         const senderHeight = sender.getBoundingClientRect().height;
 
