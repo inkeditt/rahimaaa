@@ -1252,6 +1252,37 @@ if (!dot.classList.contains('image-message')) {
         return diameter;
     }
 
+const image = dot.querySelector('.dot-content img');
+
+if (isMessageState && image) {
+    const imageWidth = 300;
+    content.style.width = `${imageWidth}px`;
+    innerBox.style.width = `${imageWidth + padding * 2}px`;
+
+    const senderWidth = sender.getBoundingClientRect().width;
+    const senderHeight = sender.getBoundingClientRect().height;
+    const contentWidth = imageWidth;
+    const contentHeight = image.getBoundingClientRect().height;
+
+    const boxWidth = Math.max(senderWidth, contentWidth) + padding * 2;
+    const boxHeight = senderHeight + contentHeight + 10 + padding * 2;
+
+    let diameter = Math.ceil(
+        Math.sqrt(boxWidth * boxWidth + boxHeight * boxHeight)
+    );
+
+    diameter = Math.max(110, Math.min(500, diameter));
+
+    innerBox.style.width = previousInnerWidth;
+    innerBox.style.height = previousInnerHeight;
+
+    dot.style.width = previousWidth;
+    dot.style.height = previousHeight;
+    dot.style.setProperty('--dot-size', previousSize);
+
+    return diameter;
+}
+            
     let bestDiameter = Infinity;
     let bestTextWidth = null;
 
