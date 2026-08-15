@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>PFRahimanniversaire</title>
     <link rel="icon" type="image/png" href="rahicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,8 +41,7 @@
         }
 
         .section {
-            height: 100vh !important;
-            height: 100dvh !important;
+            height: 100dvh;
             width: 100vw;
             scroll-snap-align: start;
             scroll-snap-stop: normal;
@@ -244,16 +243,6 @@
                 left: 4px;
             }
         }
-
-        @media not all and (min-aspect-ratio: 1/1) {
-            .bottom-nav-bar[data-active="rahimanniv"] .nav-indicator {
-                transform: translateX(0px);
-            }
-        
-            .bottom-nav-bar[data-active="rahimessages"] .nav-indicator {
-                transform: translateX(52px);
-            }
-        }
         
         @media not all and (min-aspect-ratio: 1/1) {
 
@@ -338,7 +327,7 @@
         .digit-strip { display: flex; flex-direction: column; will-change: transform; }
         .digit-strip span { display: block; height: 1.1em; line-height: 1.1em; text-align: center; }
 
-        /* --- research --- */
+        /* --- search --- */
         .controls-container { 
             z-index: 20; 
             width: 100%; 
@@ -387,12 +376,7 @@
             align-self: stretch;
             touch-action: none;
         }
-
-        #rahimessages .constellation-container {
-            display: block;
-        }
-
-        .dot-card {
+.dot-card {
             position: absolute; 
             width: var(--dot-size, 30px); 
             height: var(--dot-size, 30px);
@@ -434,6 +418,13 @@
             border: 2px solid var(--txt);
             box-shadow: 0 8px 22px rgba(80, 53, 47, 0.15);
             z-index: 30;
+        }
+
+        .dot-card.hover-name {
+            background-color: var(--bg-msg) !important;
+            border: 2px solid var(--txt);
+            box-shadow: 0 8px 22px rgba(80, 53, 47, 0.15);
+            z-index: 40;
         }
 
         .dot-card.state-name .dot-inner-box {
@@ -573,11 +564,16 @@
     margin-top: 10px;
     border-radius: 4px;
 }
+@media (min-width: 900px) {
+        #rahimanniv .bento-container {
+            gap: 14px;
+        }
 
-        .card-purple-1 { background-color: #E6D8EB; color: #49344F; box-shadow: 0 4px 15px rgba(56, 38, 63, 0.05); } 
-        .card-purple-2 { background-color: #C5A8CC; color: #3B2842; box-shadow: 0 4px 15px rgba(56, 38, 63, 0.05); } 
-        .card-purple-3 { background-color: #80618A; color: #FAF7FB; box-shadow: 0 4px 15px rgba(56, 38, 63, 0.06); } 
-        .card-purple-4 { background-color: #A77BB0; color: #38263F; box-shadow: 0 4px 15px rgba(56, 38, 63, 0.06); } 
+        #rahimanniv .bento-row {
+            gap: 14px;
+        }
+    }
+
     </style>
 </head>
 <body>
@@ -643,19 +639,19 @@
             <div class="controls-container">
                 <div class="search-container" id="search-container-box">
                     <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    <input type="text" class="search-input" id="search-bar" placeholder="Rechercher..." oninput="handleSearchInput(this.value)">
-                    <button class="dropdown-toggle-btn" id="dropdown-toggle" onclick="toggleDropdownMenu(event)" aria-label="Menu">
+                    <input type="text" class="search-input" id="search-bar" placeholder="Rechercher...">
+                    <button class="dropdown-toggle-btn" id="dropdown-toggle" aria-label="Menu">
                         <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </button>
                     <div class="custom-dropdown-menu" id="custom-dropdown">
-                        <label class="dropdown-item"><input type="checkbox" value="EEC" onchange="handleCheckboxChange()"> EEC</label>
-                        <label class="dropdown-item"><input type="checkbox" value="Joueur" onchange="handleCheckboxChange()"> Joueurs de Quidditch</label>
-                        <label class="dropdown-item"><input type="checkbox" value="Professeur" onchange="handleCheckboxChange()"> Professeur</label>
-                        <label class="dropdown-item"><input type="checkbox" value="Électron libre" onchange="handleCheckboxChange()"> Électron libre</label>
-                        <label class="dropdown-item"><input type="checkbox" value="Gryffondor" onchange="handleCheckboxChange()"> Gryffondor</label>
-                        <label class="dropdown-item"><input type="checkbox" value="Poufsouffle" onchange="handleCheckboxChange()"> Poufsouffle</label>
-                        <label class="dropdown-item"><input type="checkbox" value="Serdaigle" onchange="handleCheckboxChange()"> Serdaigle</label>
-                        <label class="dropdown-item"><input type="checkbox" value="Serpentard" onchange="handleCheckboxChange()"> Serpentard</label>
+                        <label class="dropdown-item"><input type="checkbox" value="EEC"> EEC</label>
+                        <label class="dropdown-item"><input type="checkbox" value="Joueur"> Joueurs de Quidditch</label>
+                        <label class="dropdown-item"><input type="checkbox" value="Professeur"> Professeur</label>
+                        <label class="dropdown-item"><input type="checkbox" value="Électron libre"> Électron libre</label>
+                        <label class="dropdown-item"><input type="checkbox" value="Gryffondor"> Gryffondor</label>
+                        <label class="dropdown-item"><input type="checkbox" value="Poufsouffle"> Poufsouffle</label>
+                        <label class="dropdown-item"><input type="checkbox" value="Serdaigle"> Serdaigle</label>
+                        <label class="dropdown-item"><input type="checkbox" value="Serpentard"> Serpentard</label>
                     </div>
                 </div>
             </div>
@@ -880,7 +876,6 @@ const sectionObserver = new IntersectionObserver((entries) => {
     if (hasNavIcon) {
         updateNavIndicator(activeId);
     }
-    history.replaceState(null, null, ' ');
 }, { root: mainContainer, threshold: 0.4 });
 
 document.querySelectorAll('.section').forEach(section => {
@@ -905,8 +900,6 @@ document.querySelectorAll('.nav-icon-bubble').forEach(link => {
             behavior: 'smooth',
             block: 'start'
         });
-
-        history.replaceState(null, null, ' ');
 
         navigationTimeout = setTimeout(() => {
             isNavigatingByClick = false;
@@ -1015,7 +1008,7 @@ window.addEventListener('resize', () => {
             });
         }
 
-        const exploitsObserver = new IntersectionObserver((entries) => {
+        const odometerObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.querySelectorAll('.odometer').forEach(odo => { if (odo._animate) odo._animate(); });
@@ -1025,14 +1018,22 @@ window.addEventListener('resize', () => {
 
         document.addEventListener('DOMContentLoaded', () => {
             initOdometers();
-            exploitsObserver.observe(document.getElementById('rahimanniv'));
+            odometerObserver.observe(document.getElementById('rahimanniv'));
             updateNavIndicator('rahimanniv');
-            history.replaceState(null, null, ' ');
         });
 
         /* --- page 2 --- */
         const container = document.getElementById('cloud-container');
         const dots = Array.from(container.querySelectorAll('.dot-card'));
+
+        // Conserve le texte original pour la recherche et la restauration.
+        dots.forEach(dot => {
+            const content = dot.querySelector('.dot-content');
+            if (content && !dot.classList.contains('image-message')) {
+                dot.dataset.fullText = content.textContent.trim();
+            }
+        });
+
         let originalLayout = new Map();
         let activeDot = null;
         let interactionMode = 'none';
@@ -1134,7 +1135,9 @@ window.addEventListener('resize', () => {
             const H = container.clientHeight;
             const centerX = W / 2;
             const centerY = H / 2;
-            const gap = calculateGap(visibleDots);
+            const gap = window.matchMedia('(min-width: 900px)').matches
+                ? 50
+                : calculateGap(visibleDots);
 
             const positions = visibleDots.map((dot, index) => {
                 const radius = getDotRadius(dot);
@@ -1477,6 +1480,119 @@ if (isMessageState && image) {
             });
         }
 
+        function showHoverName(dot) {
+            if (!dot.querySelector('.dot-sender')) return;
+            if (dot === activeDot) return;
+            if (dot.classList.contains('hover-name')) return;
+
+            // On mémorise l'état initial de la bulle
+            dot.dataset.hoverPrevWidth = dot.style.width;
+            dot.dataset.hoverPrevHeight = dot.style.height;
+            dot.dataset.hoverPrevLeft = dot.style.left;
+            dot.dataset.hoverPrevTop = dot.style.top;
+            dot.dataset.hoverPrevSize = dot.style.getPropertyValue('--dot-size');
+
+            const sender = dot.querySelector('.dot-sender');
+            if (!sender) return;
+
+            // S'il y a déjà une inner-box (ce qui peut arriver si mal nettoyé), on la retire
+            const oldInner = dot.querySelector('.dot-inner-box');
+            if (oldInner) oldInner.remove();
+
+            const innerBox = document.createElement('div');
+            innerBox.className = 'dot-inner-box';
+            innerBox.appendChild(sender);
+            dot.appendChild(innerBox);
+
+            dot.classList.add('hover-name');
+
+            const size = calculateCompactDiameter(dot, false);
+
+            dot.style.setProperty('--dot-size', `${size}px`);
+            dot.style.width = `${size}px`;
+            dot.style.height = `${size}px`;
+        }
+
+        function restoreHoverName(dot) {
+            if (!dot.classList.contains('hover-name')) return;
+
+            const innerBox = dot.querySelector('.dot-inner-box');
+            const sender = dot.querySelector('.dot-sender');
+            const content = dot.querySelector('.dot-content');
+
+            // On remet les éléments à leur place d'origine dans la dot
+            if (sender && innerBox) dot.appendChild(sender);
+            if (content && innerBox && !dot.contains(content)) dot.appendChild(content);
+            if (innerBox) innerBox.remove();
+
+            dot.classList.remove('hover-name');
+
+            if (dot.dataset.hoverPrevWidth !== undefined) {
+                dot.style.width = dot.dataset.hoverPrevWidth;
+                dot.style.height = dot.dataset.hoverPrevHeight;
+                dot.style.left = dot.dataset.hoverPrevLeft;
+                dot.style.top = dot.dataset.hoverPrevTop;
+                dot.style.setProperty('--dot-size', dot.dataset.hoverPrevSize);
+            }
+
+            delete dot.dataset.hoverPrevWidth;
+            delete dot.dataset.hoverPrevHeight;
+            delete dot.dataset.hoverPrevLeft;
+            delete dot.dataset.hoverPrevTop;
+            delete dot.dataset.hoverPrevSize;
+        }
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (!dot.querySelector('.dot-sender') && !dot.dataset.fullText) return;
+
+                if (!isMobile) {
+                    if (interactionMode === 'message') { 
+                        if (activeDot === dot) {
+                            restoreOriginalLayout(); 
+                            return; 
+                        } else {
+                            // Si on clique sur une autre bulle alors qu'on est en mode message, on nettoie et on ouvre l'autre
+                            restoreOriginalLayout();
+                        }
+                    }
+                    showMessage(dot);
+                    return;
+                }
+
+                if (activeDot === dot) {
+                    if (interactionMode === 'name') { showMessage(dot); return; }
+                    else { restoreOriginalLayout(); return; }
+                }
+                showName(dot);
+            });
+
+            dot.addEventListener('mouseenter', function() {
+                if (isMobile || !dot.querySelector('.dot-sender')) return;
+
+                if (interactionMode === 'message') {
+                    // Optionnel : ne rien faire si on survole une bulle qui n'est pas l'active
+                    return; 
+                }
+
+                showName(dot);
+            });
+
+            dot.addEventListener('mouseleave', function() {
+                if (isMobile) return;
+
+                if (interactionMode === 'message') {
+                    if (dot !== activeDot) {
+                        restoreHoverName(dot);
+                    }
+                    return;
+                }
+
+                restoreOriginalLayout();
+            });
+        });
+
         function showName(dot) {
     if (!dot.querySelector('.dot-sender')) return;
     if (activeDot && activeDot !== dot) restoreOriginalLayout();
@@ -1550,33 +1666,6 @@ if (isMessageState && image) {
     }
 }
 
-        dots.forEach(dot => {
-            dot.addEventListener('click', function(e) {
-                e.stopPropagation();
-                if (!dot.querySelector('.dot-sender')) return;
-                if (!isMobile) {
-                    if (interactionMode === 'message') { restoreOriginalLayout(); return; }
-                    showMessage(dot);
-                    return;
-                }
-                if (activeDot === dot) {
-                    if (interactionMode === 'name') { showMessage(dot); return; }
-                    else { restoreOriginalLayout(); return; }
-                }
-                showName(dot);
-            });
-
-            dot.addEventListener('mouseenter', function() {
-                if (isMobile || interactionMode === 'message' || !dot.querySelector('.dot-sender')) return;
-                showName(dot);
-            });
-
-            dot.addEventListener('mouseleave', function() {
-                if (isMobile || interactionMode === 'message') return;
-                restoreOriginalLayout();
-            });
-        });
-
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.search-container')) {
                 document.getElementById('custom-dropdown').classList.remove('show');
@@ -1629,6 +1718,16 @@ if (isMessageState && image) {
             document.getElementById('custom-dropdown').classList.toggle('show');
             document.getElementById('search-container-box').classList.toggle('dropdown-open');
         }
+
+        document.getElementById('search-bar').addEventListener('input', event => {
+            handleSearchInput(event.target.value);
+        });
+
+        document.querySelectorAll('#custom-dropdown input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', handleCheckboxChange);
+        });
+
+        document.getElementById('dropdown-toggle').addEventListener('click', toggleDropdownMenu);
 
         window.addEventListener('resize', () => {
             clearTimeout(window.resizeTimer);
