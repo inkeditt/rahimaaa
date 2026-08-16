@@ -816,9 +816,9 @@
                 </div>
                 <div class="dot-card" data-name="Fabio Dermott" data-cat="EEC" data-gender="male" style="--dot-size: 34px;">
                     <div class="dot-sender">Fabio Dermott</div>
-                    <div class="dot-content">Edition spéciale du ballet volant avec trois chansons pour la route :<br><br>
-                        • Good Riddance - Green Day (celle qui te souhaite tout de bon)<br><br>
-                        • See you Again - Wiz Khalifa, Charlie Put (celle un peu cliché)<br><br>
+                    <div class="dot-content">Edition spéciale du ballet volant avec trois chansons pour la route :<br>
+                        • Good Riddance - Green Day (celle qui te souhaite tout de bon)<br>
+                        • See you Again - Wiz Khalifa, Charlie Put (celle un peu cliché)<br>
                         • Abrakadabra - Buntspecht (celle pour danser)</div>
                 </div>
                 <div class="dot-card" data-name="Ruby Everheart" data-cat="Électron libre" data-house="Gryffondor" data-gender="female" style="--dot-size: 32px;">
@@ -1063,7 +1063,7 @@ window.addEventListener('resize', () => {
         dots.forEach(dot => {
             const content = dot.querySelector('.dot-content');
             if (content && !dot.classList.contains('image-message')) {
-                dot.dataset.fullText = content.textContent.trim();
+                dot.dataset.fullText = content.innerHTML.trim();
             }
         });
 
@@ -1253,7 +1253,7 @@ if (sender) {
 
 if (content && dot.dataset.fullText) {
 if (!dot.classList.contains('image-message')) {
-    content.textContent = dot.dataset.fullText || content.textContent.trim();
+    content.innerHTML = dot.dataset.fullText || content.innerHTML.trim();
 }
 }
             });
@@ -1663,7 +1663,7 @@ if (isMessageState && image) {
     if (!content) return;
 
     if (!dot.classList.contains('image-message')) {
-        content.textContent = dot.dataset.fullText || content.textContent.trim();
+        content.innerHTML = dot.dataset.fullText || content.innerHTML.trim();
     }
 
     dot.classList.remove('state-name');
