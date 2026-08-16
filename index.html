@@ -382,7 +382,7 @@
             align-self: stretch;
             touch-action: none;
         }
-.dot-card {
+        .dot-card {
             position: absolute; 
             width: var(--dot-size, 30px); 
             height: var(--dot-size, 30px);
@@ -434,63 +434,63 @@
         }
 
         .dot-card.state-name .dot-inner-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
-    box-sizing: border-box;
-    padding: 18px;
-}
-
-.dot-card.state-name .dot-sender {
-    width: auto;
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    opacity: 1;
-    font-weight: 700;
-    font-size: 0.75em;
-    color: var(--txt);
-    text-align: center;
-    line-height: 1.25;
-}
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            box-sizing: border-box;
+            padding: 18px;
+        }
+        
+        .dot-card.state-name .dot-sender {
+            width: auto;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            font-weight: 700;
+            font-size: 0.75em;
+            color: var(--txt);
+            text-align: center;
+            line-height: 1.25;
+        }
 
         .name-group { display: inline-block; white-space: nowrap; }
         .name-group-wrap { display: inline; white-space: normal; text-align: center; }
 
         .dot-category {
-    font-weight: 500;
-    font-size: 0.8em;
-    opacity: 0.85;
-    margin-top: 3px;
-    white-space: nowrap;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 3px;
-
-    width: max-content;
-    max-width: 100%;
-    align-self: center;
-
-    text-align: center;
-    color: var(--txt);
-}
-
-.dot-category::before,
-.dot-category::after {
-    content: "–";
-    opacity: 0.7;
-    flex-shrink: 0;
-}
+            font-weight: 500;
+            font-size: 0.8em;
+            opacity: 0.85;
+            margin-top: 3px;
+            white-space: nowrap;
+        
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3px;
+        
+            width: max-content;
+            max-width: 100%;
+            align-self: center;
+        
+            text-align: center;
+            color: var(--txt);
+        }
+        
+        .dot-category::before,
+        .dot-category::after {
+            content: "–";
+            opacity: 0.7;
+            flex-shrink: 0;
+        }
         .dot-count { font-weight: 600; font-size: 0.75em; opacity: 0.75; margin-top: 2px; white-space: nowrap; color: var(--txt); }
 
         /* --- message --- */
@@ -502,84 +502,93 @@
         }
 
         .dot-card.state-message .dot-inner-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
-    box-sizing: border-box;
-    padding: 18px;
-}
-
-.dot-card.state-message .dot-sender {
-    width: auto;
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    opacity: 1;
-    font-weight: 700;
-    font-size: 0.72em;
-    margin-bottom: 6px;
-    border-bottom: 1px solid rgba(75, 64, 56, 0.2);
-    padding-bottom: 4px;
-    text-align: center;
-    color: var(--txt);
-    line-height: 1.2;
-    flex-shrink: 0;
-    white-space: normal;
-}
-
-.dot-card.state-message .dot-content {
-    width: auto;
-    max-width: 100%;
-    display: block;
-    opacity: 1;
-    text-align: center;
-    font-size: 0.72em;
-    line-height: 1.35;
-    color: var(--txt);
-    overflow-wrap: break-word;
-    word-break: normal;
-}
-
-.dot-card.state-message.image-message .dot-content {
-    width: auto;
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.72em;
-    line-height: 1.35;
-    color: var(--txt);
-    text-align: center;
-    overflow-wrap: break-word;
-    word-break: normal;
-}
-
-.dot-card.state-message.image-message .dot-content img {
-    display: block;
-    width: 200px;
-    height: auto;
-    max-width: 100%;
-    margin-top: 10px;
-    border-radius: 4px;
-}
-@media (min-width: 900px) {
-        #rahimanniv .bento-container {
-            gap: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            box-sizing: border-box;
+            padding: 18px;
         }
 
-        #rahimanniv .bento-row {
-            gap: 14px;
+        .dot-card.state-message .dot-sender {
+            width: auto;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 1;
+            font-weight: 700;
+            font-size: 0.72em;
+            margin-bottom: 6px;
+            border-bottom: 1px solid rgba(75, 64, 56, 0.2);
+            padding-bottom: 4px;
+            text-align: center;
+            color: var(--txt);
+            line-height: 1.2;
+            flex-shrink: 0;
+            white-space: normal;
         }
-    }
-
+        
+        .dot-card.state-message .dot-content {
+            width: auto;
+            max-width: 100%;
+            display: block;
+            opacity: 1;
+            text-align: center;
+            font-size: 0.72em;
+            line-height: 1.35;
+            color: var(--txt);
+            overflow-wrap: break-word;
+            word-break: normal;
+        }
+        
+        .dot-card.state-message.image-message .dot-content {
+            width: auto;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72em;
+            line-height: 1.35;
+            color: var(--txt);
+            text-align: center;
+            overflow-wrap: break-word;
+            word-break: normal;
+        }
+        
+        .dot-card.state-message.image-message .dot-content img {
+            display: block;
+            width: 200px;
+            height: auto;
+            max-width: 100%;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+        @media (min-width: 900px) {
+                #rahimanniv .bento-container {
+                    gap: 14px;
+                }
+        
+                #rahimanniv .bento-row {
+                    gap: 14px;
+                }
+            }
+        .scroll-hint {
+            font-size: clamp(0.7em, 1.5vw, 0.9em);
+            font-weight: 400;
+            font-style: italic;
+            color: #7A3F52;
+            text-align: center;
+            z-index: 10;
+            margin: 0 0 8px 0;
+            flex-shrink: 0;
+        }
     </style>
 </head>
 <body>
@@ -634,6 +643,9 @@
                     <div class="bento-card card-rose-medium"><div class="odometer" data-start="701" data-end="789" data-step="4"></div><div class="stat-label-bottom bento-text-content">PR distribués<br><small>(dont 618 positifs et 171 négatifs)</small></div></div>
                     <div class="bento-card card-rose-dark"><div class="odometer" data-start="0" data-end="1" data-step="1"></div><div class="stat-label-bottom bento-text-content">sujet posté dans le mauvais forum</div></div>
                 </div>
+            </div>
+            <div class="scroll-hint">
+                ↓ Pssst, ça continue là-dessus ↓
             </div>
         </div>
 
